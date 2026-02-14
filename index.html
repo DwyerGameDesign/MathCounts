@@ -515,6 +515,328 @@
 
   .pill-text strong { color: var(--teal); }
 
+  /* ── PRACTICE TAB ── */
+  .prac-header {
+    margin-bottom: 28px;
+  }
+
+  .prac-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .prac-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  .prac-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .prac-progress-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+
+  .prac-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--teal));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .prac-dots {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .prac-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+
+  .prac-dot.correct { background: var(--teal); }
+  .prac-dot.wrong   { background: var(--red); }
+  .prac-dot.current { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+
+  .prac-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 30px;
+    min-height: 340px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .prac-card.correct-glow { border-color: var(--teal); box-shadow: 0 0 20px rgba(0,212,170,0.1); }
+  .prac-card.wrong-glow   { border-color: var(--red);  box-shadow: 0 0 20px rgba(255,95,109,0.1); }
+
+  .prac-topic {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .prac-topic::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .prac-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  .prac-prompt {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .prac-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .prac-choice {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    user-select: none;
+  }
+
+  .prac-choice:hover:not(.locked) {
+    border-color: var(--gold);
+    background: rgba(240,180,41,0.06);
+    transform: translateX(2px);
+  }
+
+  .prac-choice.locked { cursor: default; }
+
+  .prac-choice.selected-correct {
+    border-color: var(--teal);
+    background: rgba(0,212,170,0.08);
+  }
+
+  .prac-choice.selected-wrong {
+    border-color: var(--red);
+    background: rgba(255,95,109,0.08);
+  }
+
+  .prac-choice.reveal-correct {
+    border-color: rgba(0,212,170,0.4);
+    background: rgba(0,212,170,0.04);
+  }
+
+  .choice-key {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+
+  .prac-choice.selected-correct .choice-key { border-color: var(--teal); color: var(--teal); background: rgba(0,212,170,0.1); }
+  .prac-choice.selected-wrong  .choice-key { border-color: var(--red);  color: var(--red);  background: rgba(255,95,109,0.1); }
+  .prac-choice.reveal-correct  .choice-key { border-color: var(--teal); color: var(--teal); }
+
+  .choice-icon {
+    flex-shrink: 0;
+    font-size: 16px;
+    margin-top: 2px;
+  }
+
+  .choice-body { flex: 1; }
+
+  .choice-label {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+
+  .choice-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .prac-feedback {
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  .prac-feedback.correct-fb {
+    background: rgba(0,212,170,0.07);
+    border: 1px solid rgba(0,212,170,0.25);
+  }
+
+  .prac-feedback.wrong-fb {
+    background: rgba(255,95,109,0.07);
+    border: 1px solid rgba(255,95,109,0.25);
+  }
+
+  .prac-feedback .fb-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .correct-fb .fb-header { color: var(--teal); }
+  .wrong-fb   .fb-header { color: var(--red); }
+
+  .prac-feedback strong { color: var(--text); font-weight: 500; }
+
+  .prac-solution-box {
+    margin-top: 20px;
+    background: rgba(240,180,41,0.04);
+    border: 1px solid rgba(240,180,41,0.2);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .sol-step-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .sol-steps {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.75;
+  }
+
+  .sol-steps strong { color: var(--gold); font-weight: 500; }
+
+  .sol-answer-pill {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--teal);
+    background: rgba(0,212,170,0.08);
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,212,170,0.25);
+  }
+
+  .prac-next-btn {
+    display: block;
+    margin: 24px auto 0;
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .prac-next-btn:hover {
+    background: #ffc93c;
+    transform: translateY(-1px);
+  }
+
+  .prac-finished {
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .finish-star {
+    font-size: 56px;
+    color: var(--gold);
+    margin-bottom: 16px;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .finish-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .finish-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .finish-msg {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 640px) {
     header, .tab-bar, .content { padding-left: 20px; padding-right: 20px; }
@@ -539,6 +861,7 @@
   <div class="tab" onclick="showTab('prob')">Probability</div>
   <div class="tab" onclick="showTab('comp')">Complementary</div>
   <div class="tab" onclick="showTab('ref')">Quick Ref</div>
+  <div class="tab" onclick="showTab('practice')">⚡ Practice</div>
 </nav>
 
 <main class="content">
@@ -1057,6 +1380,60 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
+       TAB 5 · PRACTICE
+  ═══════════════════════════════════════════ -->
+  <section class="panel" id="tab-practice">
+
+    <!-- Progress bar -->
+    <div class="prac-header">
+      <div class="prac-meta">
+        <span class="prac-counter" id="prac-counter">Problem 1 of 12</span>
+        <span class="prac-score" id="prac-score">Score: 0</span>
+      </div>
+      <div class="prac-progress-track">
+        <div class="prac-progress-fill" id="prac-progress" style="width:0%"></div>
+      </div>
+      <div class="prac-dots" id="prac-dots"></div>
+    </div>
+
+    <!-- Problem card -->
+    <div class="prac-card" id="prac-card">
+      <div class="prac-topic" id="prac-topic">Combinations</div>
+      <div class="prac-question" id="prac-question">Loading...</div>
+
+      <!-- Phase 1: method MCQ -->
+      <div id="phase-method">
+        <div class="prac-prompt">Which method or formula should you use first?</div>
+        <div class="prac-choices" id="method-choices"></div>
+      </div>
+
+      <!-- Phase 2: answer MCQ -->
+      <div id="phase-answer" style="display:none;">
+        <div class="prac-feedback" id="method-feedback"></div>
+        <div class="prac-prompt" style="margin-top:20px;">Now — what's the answer?</div>
+        <div class="prac-choices" id="answer-choices"></div>
+      </div>
+
+      <!-- Phase 3: full solution -->
+      <div id="phase-solution" style="display:none;">
+        <div class="prac-feedback" id="answer-feedback"></div>
+        <div class="prac-solution-box" id="solution-box"></div>
+        <button class="prac-next-btn" id="next-btn" onclick="nextProblem()">Next Problem →</button>
+      </div>
+    </div>
+
+    <!-- Finished screen -->
+    <div class="prac-finished" id="prac-finished" style="display:none;">
+      <div class="finish-star">★</div>
+      <div class="finish-title">Set Complete!</div>
+      <div class="finish-score" id="finish-score"></div>
+      <div class="finish-msg" id="finish-msg"></div>
+      <button class="prac-next-btn" onclick="restartPractice()" style="margin-top:24px;">Restart Practice</button>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════
        TAB 4 · QUICK REFERENCE
   ═══════════════════════════════════════════ -->
   <section class="panel" id="tab-ref">
@@ -1216,14 +1593,509 @@
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById('tab-' + id).classList.add('active');
     event.target.classList.add('active');
+    if (id === 'practice' && !practiceInit) initPractice();
   }
 
-  function toggleGotcha(card) {
-    card.classList.toggle('open');
+  function toggleGotcha(card) { card.classList.toggle('open'); }
+  function toggleExample(card) { card.classList.toggle('open'); }
+
+  /* ════════════════════════════════════════
+     PRACTICE ENGINE
+  ════════════════════════════════════════ */
+
+  const PROBLEMS = [
+    {
+      topic: "Combinations",
+      question: "A student council has 12 members. How many ways can a 4-person committee be formed where the order of selection doesn't matter?",
+      methodChoices: [
+        { label: "Permutation — P(12, 4)", desc: "Use when the order of selection matters (e.g. assigning specific roles).", correct: false, icon: "❌" },
+        { label: "Combination — C(12, 4)", desc: "Use when selecting a group where order doesn't matter.", correct: true, icon: "✅" },
+        { label: "Stars & Bars", desc: "Use to distribute identical items into bins.", correct: false, icon: "❌" },
+        { label: "Circular Permutation", desc: "Use when arranging around a circle.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "Exactly right. Since there are no distinct roles (no president/VP), the committee is an unordered group — that's a combination.",
+        wrong: "Not quite. The problem says the committee has no defined roles and order of selection doesn't matter. That's the key signal for combinations."
+      },
+      answerChoices: [
+        { label: "C(12,4) = 495", correct: true },
+        { label: "C(12,4) = 11,880", correct: false },
+        { label: "C(12,4) = 220", correct: false },
+        { label: "C(12,4) = 3,991,680", correct: false },
+      ],
+      solution: `<strong>C(12, 4)</strong> = 12! / (4! × 8!) = (12 × 11 × 10 × 9) / (4 × 3 × 2 × 1) = 11,880 / 24`,
+      answer: "495"
+    },
+    {
+      topic: "Complementary Counting",
+      question: "How many 4-digit numbers (1000–9999) have at least one digit equal to 7?",
+      methodChoices: [
+        { label: "Direct casework — count each case (exactly 1, 2, 3, 4 sevens)", desc: "Add up results for each possible number of 7s.", correct: false, icon: "⚠️" },
+        { label: "Complementary — Total minus numbers with NO sevens", desc: "Count 4-digit numbers that avoid 7, then subtract.", correct: true, icon: "✅" },
+        { label: "PIE — Inclusion-Exclusion", desc: "Used when events share elements and you need to avoid double-counting.", correct: false, icon: "❌" },
+        { label: "Stars & Bars", desc: "Used to distribute identical objects into bins.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "Perfect instinct. 'At least one' is always a complementary counting signal. Counting the complement (no 7s) requires just one calculation instead of four cases.",
+        wrong: "The phrase 'at least one' almost always signals complementary counting. Direct casework here means summing 4 separate cases — much slower and error-prone."
+      },
+      answerChoices: [
+        { label: "2,457", correct: false },
+        { label: "3,168", correct: true },
+        { label: "4,005", correct: false },
+        { label: "2,916", correct: false },
+      ],
+      solution: `<strong>Total 4-digit numbers:</strong> 9000 (1000–9999)<br>
+<strong>No 7s at all:</strong> First digit has 8 choices (1–9 except 7), each remaining digit has 9 choices (0–9 except 7).<br>
+Count = 8 × 9 × 9 × 9 = 5,832<br>
+<strong>Answer:</strong> 9000 − 5832`,
+      answer: "3,168"
+    },
+    {
+      topic: "Circular Permutations",
+      question: "In how many ways can 7 people be seated around a circular table?",
+      methodChoices: [
+        { label: "7! = 5,040", desc: "Arrange 7 distinct people in a straight line.", correct: false, icon: "❌" },
+        { label: "(7−1)! = 6! = 720", desc: "Fix one person to eliminate rotational duplicates.", correct: true, icon: "✅" },
+        { label: "7!/2 = 2,520", desc: "Divide by 2 to remove mirror reflections (used for necklaces).", correct: false, icon: "❌" },
+        { label: "C(7,1) × 6! = 5,040", desc: "Choose who sits first, then arrange the rest.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "Correct! In circular arrangements, one seat is fixed to remove rotational duplicates. That leaves (n−1)! arrangements of the remaining people.",
+        wrong: "Remember: in a circle, rotations of the same arrangement are identical. Fix one person as a reference point, then count the (n−1)! ways to arrange the rest. 7!/2 is only for necklaces (where flipping also creates duplicates)."
+      },
+      answerChoices: [
+        { label: "5,040", correct: false },
+        { label: "720", correct: true },
+        { label: "2,520", correct: false },
+        { label: "840", correct: false },
+      ],
+      solution: `Fix one person in place to remove rotational equivalence. Arrange the remaining <strong>6 people</strong> in the remaining 6 seats.<br>
+(7−1)! = 6! = 6 × 5 × 4 × 3 × 2 × 1`,
+      answer: "720"
+    },
+    {
+      topic: "Stars & Bars",
+      question: "How many ways can 9 identical cookies be distributed among 3 children if each child must receive at least 2 cookies?",
+      methodChoices: [
+        { label: "C(9+3−1, 3−1) = C(11, 2)", desc: "Stars & Bars with no minimum restriction.", correct: false, icon: "❌" },
+        { label: "Give 2 to each child first, then Stars & Bars on the remaining.", desc: "Reduce to a simpler distribution by satisfying the minimum first.", correct: true, icon: "✅" },
+        { label: "Permutation of 9 items into 3 groups", desc: "Count ordered arrangements of cookies.", correct: false, icon: "❌" },
+        { label: "3⁹ ways to assign each cookie", desc: "Each cookie independently goes to one of 3 children.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "Great thinking! When each bin has a minimum, satisfy it first: give each child 2 cookies (uses 6), then distribute the remaining 3 freely with Stars & Bars.",
+        wrong: "When each bin requires a minimum, the trick is to pre-satisfy the minimum first. Give 2 to each child (using 6 cookies), then use Stars & Bars on the remaining 3."
+      },
+      answerChoices: [
+        { label: "C(11,2) = 55", correct: false },
+        { label: "C(5,2) = 10", correct: true },
+        { label: "C(9,2) = 36", correct: false },
+        { label: "C(6,2) = 15", correct: false },
+      ],
+      solution: `Give each of the 3 children 2 cookies upfront → 6 used, <strong>3 remaining</strong>.<br>
+Now distribute 3 identical cookies among 3 children with no restriction:<br>
+C(3 + 3 − 1, 3 − 1) = C(5, 2) = 10`,
+      answer: "C(5,2) = 10"
+    },
+    {
+      topic: "Probability — Complement",
+      question: "A fair coin is flipped 5 times. What is the probability of getting at least one tail?",
+      methodChoices: [
+        { label: "Casework — P(1 tail) + P(2 tails) + P(3 tails) + P(4 tails) + P(5 tails)", desc: "Sum probabilities for each case.", correct: false, icon: "⚠️" },
+        { label: "Complement — 1 − P(no tails at all)", desc: "'At least one' flips to 'none', which is a single clean calculation.", correct: true, icon: "✅" },
+        { label: "Multiplication rule — P(T) × P(T) × P(T) × P(T) × P(T)", desc: "Multiply probabilities for independent sequential events.", correct: false, icon: "❌" },
+        { label: "Addition rule — P(T) + P(T) + … for 5 flips", desc: "Add probabilities across independent events.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "Exactly! 'At least one tail' = 1 − P(all heads). P(all heads) = (1/2)⁵ = 1/32. Done in one step instead of summing 5 cases.",
+        wrong: "Whenever you see 'at least one', flip to the complement. P(at least one tail) = 1 − P(zero tails) = 1 − (1/2)⁵. Much faster than summing 5 cases."
+      },
+      answerChoices: [
+        { label: "1/32", correct: false },
+        { label: "31/32", correct: true },
+        { label: "15/16", correct: false },
+        { label: "5/32", correct: false },
+      ],
+      solution: `P(at least one tail) = 1 − P(no tails)<br>
+P(no tails) = P(all heads) = (1/2)⁵ = <strong>1/32</strong><br>
+P(at least one tail) = 1 − 1/32`,
+      answer: "31/32"
+    },
+    {
+      topic: "Permutations with Repetition",
+      question: "How many distinct arrangements are there of the letters in the word BOOKKEEPER?",
+      methodChoices: [
+        { label: "10! — all letters are distinct", desc: "Treat every letter as unique.", correct: false, icon: "❌" },
+        { label: "10! / (duplicates) — Multinomial formula", desc: "Divide by factorial of each repeated letter's count.", correct: true, icon: "✅" },
+        { label: "C(10, 2) × 8! — choose positions for repeats", desc: "Place repeated letters first, arrange the rest.", correct: false, icon: "❌" },
+        { label: "(10−1)! — circular arrangement", desc: "Fix one letter to eliminate rotation duplicates.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "Right. BOOKKEEPER has repeated letters (O×2, K×2, E×3), so we divide 10! by each frequency factorial to avoid overcounting.",
+        wrong: "When a word has repeated letters, we must divide by the factorial of each letter's frequency. BOOKKEEPER has B×1, O×2, K×2, E×3, P×1, R×1."
+      },
+      answerChoices: [
+        { label: "151,200", correct: true },
+        { label: "3,628,800", correct: false },
+        { label: "75,600", correct: false },
+        { label: "30,240", correct: false },
+      ],
+      solution: `BOOKKEEPER: B(1), O(2), K(2), E(3), P(1), R(1) → 10 letters total<br>
+Arrangements = <strong>10! / (1! × 2! × 2! × 3! × 1! × 1!)</strong><br>
+= 3,628,800 / (1 × 2 × 2 × 6 × 1 × 1)<br>
+= 3,628,800 / 24`,
+      answer: "151,200"
+    },
+    {
+      topic: "PIE — Inclusion-Exclusion",
+      question: "How many integers from 1 to 200 are divisible by 4 or by 6?",
+      methodChoices: [
+        { label: "Count divisible by 4 + count divisible by 6", desc: "Add both groups together.", correct: false, icon: "❌" },
+        { label: "PIE: |div by 4| + |div by 6| − |div by 12|", desc: "Subtract the overlap (divisible by LCM of 4 and 6 = 12).", correct: true, icon: "✅" },
+        { label: "Complementary: 200 − |not divisible by 4 or 6|", desc: "Subtract numbers that avoid both conditions.", correct: false, icon: "⚠️" },
+        { label: "Multiply both counts: 50 × 33", desc: "Combine by multiplication for independent events.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "Spot on — this is a textbook PIE problem. 'Divisible by A or B' means union, and union requires adding both sets then subtracting the overlap (LCM).",
+        wrong: "The keyword 'OR' signals a union, which means PIE. Simply adding gives a double-count of numbers divisible by both 4 and 6 (i.e., divisible by LCM = 12)."
+      },
+      answerChoices: [
+        { label: "83", correct: true },
+        { label: "66", correct: false },
+        { label: "117", correct: false },
+        { label: "50", correct: false },
+      ],
+      solution: `⌊200/4⌋ = <strong>50</strong> (divisible by 4)<br>
+⌊200/6⌋ = <strong>33</strong> (divisible by 6)<br>
+⌊200/12⌋ = <strong>16</strong> (divisible by both — LCM(4,6) = 12)<br>
+PIE: 50 + 33 − 16`,
+      answer: "83"
+    },
+    {
+      topic: "Dependent Probability",
+      question: "A jar has 6 red and 4 green marbles. Two are drawn without replacement. What is the probability the second marble is green, given the first was red?",
+      methodChoices: [
+        { label: "P(green) = 4/10 — independent of first draw", desc: "Treat each draw as if the jar resets.", correct: false, icon: "❌" },
+        { label: "Conditional probability — P(green | first red) = 4/9", desc: "The first draw changes what's left in the jar.", correct: true, icon: "✅" },
+        { label: "Combination ratio — C(4,1)/C(10,2)", desc: "Use combinations to count favorable vs total outcomes.", correct: false, icon: "❌" },
+        { label: "Complement — 1 − P(second is red | first was red)", desc: "Subtract the probability it's red from 1.", correct: false, icon: "⚠️" },
+      ],
+      methodFeedback: {
+        correct: "Correct. After one red is removed, the jar has 9 marbles left (6 red, 4 green). The denominator shrinks. This is conditional/dependent probability.",
+        wrong: "Without replacement means the first draw changes the jar. After removing a red marble: 9 marbles remain (6 red, 4 green). So the conditional probability is 4/9."
+      },
+      answerChoices: [
+        { label: "2/5", correct: false },
+        { label: "4/9", correct: true },
+        { label: "1/3", correct: false },
+        { label: "4/10", correct: false },
+      ],
+      solution: `After the first red marble is drawn, the jar has 9 marbles left: 6 red, <strong>4 green</strong>.<br>
+P(second is green | first was red) = 4/9<br>
+The denominator shrinks from 10 → 9 because we drew without replacement.`,
+      answer: "4/9"
+    },
+    {
+      topic: "Derangements",
+      question: "Four students each bring a gift. The gifts are randomly redistributed so each student gets one. What is the probability that no student receives their own gift?",
+      methodChoices: [
+        { label: "Complement — 1 minus probability at least one keeps their gift", desc: "Subtract from 1 the cases where someone gets their own.", correct: false, icon: "⚠️" },
+        { label: "Derangements — D(4)/4!", desc: "Count permutations where nothing is in its original position.", correct: true, icon: "✅" },
+        { label: "Combination — C(4,4)/4!", desc: "All ways to select 4 items from 4.", correct: false, icon: "❌" },
+        { label: "P(4,4) = 4! = 24 total, pick favorable by casework", desc: "Enumerate all 24 arrangements.", correct: false, icon: "⚠️" },
+      ],
+      methodFeedback: {
+        correct: "Exactly — this is the definition of a derangement: a permutation where no element is in its original position. D(4) = 9, and the probability is D(4)/4!.",
+        wrong: "When no item can return to its original position, that's a derangement. The count is D(n) and for n=4: D(4) = 9. The probability is D(4)/4! = 9/24 = 3/8."
+      },
+      answerChoices: [
+        { label: "1/4", correct: false },
+        { label: "3/8", correct: true },
+        { label: "5/8", correct: false },
+        { label: "1/3", correct: false },
+      ],
+      solution: `D(4) = 9 (memorize: D(1)=0, D(2)=1, D(3)=2, <strong>D(4)=9</strong>)<br>
+Total arrangements = 4! = 24<br>
+P(derangement) = D(4) / 4! = 9/24`,
+      answer: "3/8"
+    },
+    {
+      topic: "Glue Technique",
+      question: "8 people need to sit in a row. Two friends, Alex and Blake, must sit next to each other. How many arrangements are possible?",
+      methodChoices: [
+        { label: "8! minus cases where they aren't adjacent", desc: "Complementary approach.", correct: false, icon: "⚠️" },
+        { label: "Glue Alex & Blake together → treat as 7 items, then multiply by 2", desc: "Merge the pair into a single unit, count, then account for their internal order.", correct: true, icon: "✅" },
+        { label: "Choose 2 adjacent seats out of 8, then arrange the rest", desc: "Pick the position for the pair, then fill remaining seats.", correct: false, icon: "⚠️" },
+        { label: "C(8,2) × 6!", desc: "Choose seats for the pair, arrange the rest.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "The glue technique is perfect here. Merge Alex and Blake into one super-person. Now arrange 7 items in a row: 7! ways. But Alex and Blake can swap within the unit: × 2!.",
+        wrong: "When two people must be adjacent, the classic trick is to 'glue' them together. Treat them as a single unit, giving 7 items to arrange. Then multiply by 2! for their internal order."
+      },
+      answerChoices: [
+        { label: "7! = 5,040", correct: false },
+        { label: "7! × 2! = 10,080", correct: true },
+        { label: "8! / 2 = 20,160", correct: false },
+        { label: "6! × 2! = 1,440", correct: false },
+      ],
+      solution: `<strong>Glue</strong> Alex and Blake into one unit → 7 objects to arrange in a row.<br>
+Arrangements of 7 objects: 7! = 5,040<br>
+Internal arrangements of the pair: 2! = 2<br>
+Total: 7! × 2!`,
+      answer: "7! × 2! = 10,080"
+    },
+    {
+      topic: "Expected Value",
+      question: "A die is rolled. You win $3 if you roll a 5 or 6, lose $1 if you roll a 1 or 2, and win $0 otherwise. What is the expected value per roll?",
+      methodChoices: [
+        { label: "Average the three outcomes: ($3 − $1 + $0) / 3", desc: "Simple average of the three payout values.", correct: false, icon: "❌" },
+        { label: "E = Σ xᵢ · P(xᵢ) — weight each outcome by its probability", desc: "Multiply each outcome by its likelihood and sum.", correct: true, icon: "✅" },
+        { label: "Count favorable outcomes / total outcomes", desc: "Use basic probability for the best outcome.", correct: false, icon: "❌" },
+        { label: "Complement: 1 − P(loss) × payout", desc: "Subtract loss probability from 1.", correct: false, icon: "❌" },
+      ],
+      methodFeedback: {
+        correct: "Correct! Expected value always weights each outcome by its probability. Don't just average the payouts — the probabilities differ for each group.",
+        wrong: "Expected value is always E = Σ xᵢ × P(xᵢ). Averaging payouts ignores how likely each is. Each outcome must be weighted by its probability."
+      },
+      answerChoices: [
+        { label: "$0.67", correct: true },
+        { label: "$1.00", correct: false },
+        { label: "$0.50", correct: false },
+        { label: "$0.33", correct: false },
+      ],
+      solution: `P(roll 5 or 6) = 2/6 = 1/3 → payout: <strong>+$3</strong><br>
+P(roll 1 or 2) = 2/6 = 1/3 → payout: <strong>−$1</strong><br>
+P(roll 3 or 4) = 2/6 = 1/3 → payout: <strong>$0</strong><br><br>
+E = (3)(1/3) + (−1)(1/3) + (0)(1/3) = 1 − 1/3 + 0 = 2/3`,
+      answer: "≈ $0.67 (= 2/3)"
+    },
+    {
+      topic: "Combination vs. Permutation",
+      question: "A class of 20 students needs to elect a President, Vice President, and Treasurer. How many outcomes are possible?",
+      methodChoices: [
+        { label: "C(20, 3) = 1,140 — choose 3 from 20", desc: "Select 3 people without roles.", correct: false, icon: "❌" },
+        { label: "P(20, 3) = 20 × 19 × 18 — order matters (different roles)", desc: "Each position is distinct, so order of selection matters.", correct: true, icon: "✅" },
+        { label: "20³ — any student can hold any role with repeats", desc: "Allow the same student in multiple roles.", correct: false, icon: "❌" },
+        { label: "3! × C(20,3) — arrange 3 chosen students into roles", desc: "Choose 3, then assign roles.", correct: false, icon: "⚠️" },
+      ],
+      methodFeedback: {
+        correct: "Exactly. President, VP, and Treasurer are three distinct roles — swapping two people changes the outcome. That's the signal for permutation. Note: P(20,3) = 20×19×18 and 3!×C(20,3) actually give the same answer — both approaches work!",
+        wrong: "The key signal: the three positions are distinct (President ≠ VP). Swapping two students changes the result, so order matters → Permutation. P(20,3) = 20 × 19 × 18."
+      },
+      answerChoices: [
+        { label: "1,140", correct: false },
+        { label: "6,840", correct: true },
+        { label: "8,000", correct: false },
+        { label: "3,420", correct: false },
+      ],
+      solution: `Three <strong>distinct</strong> roles → order matters → Permutation.<br>
+P(20, 3) = 20! / (20−3)! = 20 × 19 × 18`,
+      answer: "6,840"
+    },
+  ];
+
+  let practiceInit = false;
+  let currentIdx = 0;
+  let score = 0;
+  let dotResults = [];
+  let phase = 'method'; // 'method' | 'answer' | 'done'
+
+  function initPractice() {
+    practiceInit = true;
+    currentIdx = 0;
+    score = 0;
+    dotResults = new Array(PROBLEMS.length).fill('pending');
+    buildDots();
+    loadProblem(0);
   }
 
-  function toggleExample(card) {
-    card.classList.toggle('open');
+  function buildDots() {
+    const container = document.getElementById('prac-dots');
+    container.innerHTML = '';
+    PROBLEMS.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'prac-dot' + (i === 0 ? ' current' : '');
+      dot.id = 'dot-' + i;
+      container.appendChild(dot);
+    });
+  }
+
+  function loadProblem(idx) {
+    phase = 'method';
+    const p = PROBLEMS[idx];
+
+    // Reset card glow
+    const card = document.getElementById('prac-card');
+    card.classList.remove('correct-glow', 'wrong-glow');
+
+    // Header
+    document.getElementById('prac-counter').textContent = `Problem ${idx + 1} of ${PROBLEMS.length}`;
+    document.getElementById('prac-score').textContent = `Score: ${score}`;
+    document.getElementById('prac-progress').style.width = `${(idx / PROBLEMS.length) * 100}%`;
+
+    // Content
+    document.getElementById('prac-topic').textContent = p.topic;
+    document.getElementById('prac-question').textContent = p.question;
+
+    // Show phase 1
+    document.getElementById('phase-method').style.display = 'block';
+    document.getElementById('phase-answer').style.display = 'none';
+    document.getElementById('phase-solution').style.display = 'none';
+
+    // Build method choices
+    const mc = document.getElementById('method-choices');
+    mc.innerHTML = '';
+    const keys = ['A', 'B', 'C', 'D'];
+    p.methodChoices.forEach((choice, i) => {
+      const el = document.createElement('div');
+      el.className = 'prac-choice';
+      el.innerHTML = `
+        <div class="choice-key">${keys[i]}</div>
+        <div class="choice-body">
+          <div class="choice-label">${choice.label}</div>
+          <div class="choice-desc">${choice.desc}</div>
+        </div>
+      `;
+      el.onclick = () => selectMethod(el, choice.correct, i, idx);
+      mc.appendChild(el);
+    });
+
+    // Update dots
+    dotResults.forEach((res, i) => {
+      const dot = document.getElementById('dot-' + i);
+      dot.className = 'prac-dot';
+      if (res === 'correct') dot.classList.add('correct');
+      else if (res === 'wrong') dot.classList.add('wrong');
+      if (i === idx) dot.classList.add('current');
+    });
+  }
+
+  function selectMethod(el, isCorrect, choiceIdx, probIdx) {
+    // Lock all choices
+    const allChoices = document.querySelectorAll('#method-choices .prac-choice');
+    allChoices.forEach(c => c.classList.add('locked'));
+
+    const p = PROBLEMS[probIdx];
+
+    if (isCorrect) {
+      el.classList.add('selected-correct');
+    } else {
+      el.classList.add('selected-wrong');
+      // Reveal correct
+      allChoices.forEach((c, i) => {
+        if (p.methodChoices[i].correct) c.classList.add('reveal-correct');
+      });
+    }
+
+    // Show feedback + answer phase
+    const fb = document.getElementById('method-feedback');
+    fb.className = 'prac-feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+    fb.innerHTML = `<div class="fb-header">${isCorrect ? '✓ Correct Method' : '✗ Not Quite'}</div>${p.methodFeedback[isCorrect ? 'correct' : 'wrong']}`;
+
+    document.getElementById('phase-answer').style.display = 'block';
+
+    // Build answer choices
+    const ac = document.getElementById('answer-choices');
+    ac.innerHTML = '';
+    const keys = ['A', 'B', 'C', 'D'];
+    const shuffled = [...p.answerChoices].sort(() => Math.random() - 0.5);
+    shuffled.forEach((choice, i) => {
+      const el2 = document.createElement('div');
+      el2.className = 'prac-choice';
+      el2.innerHTML = `
+        <div class="choice-key">${keys[i]}</div>
+        <div class="choice-body">
+          <div class="choice-label">${choice.label}</div>
+        </div>
+      `;
+      el2.onclick = () => selectAnswer(el2, choice.correct, i, probIdx, shuffled, isCorrect);
+      ac.appendChild(el2);
+    });
+
+    phase = 'answer';
+  }
+
+  function selectAnswer(el, isCorrect, choiceIdx, probIdx, shuffled, methodCorrect) {
+    const allChoices = document.querySelectorAll('#answer-choices .prac-choice');
+    allChoices.forEach(c => c.classList.add('locked'));
+
+    const p = PROBLEMS[probIdx];
+    const card = document.getElementById('prac-card');
+    const bothCorrect = methodCorrect && isCorrect;
+
+    if (isCorrect) {
+      el.classList.add('selected-correct');
+      card.classList.add('correct-glow');
+    } else {
+      el.classList.add('selected-wrong');
+      card.classList.add('wrong-glow');
+      allChoices.forEach((c, i) => {
+        if (shuffled[i].correct) c.classList.add('reveal-correct');
+      });
+    }
+
+    // Score: +2 for both right, +1 for right answer with wrong method, 0 otherwise
+    if (bothCorrect) score += 2;
+    else if (isCorrect) score += 1;
+
+    // Update dot
+    dotResults[probIdx] = bothCorrect ? 'correct' : (isCorrect ? 'correct' : 'wrong');
+    const dot = document.getElementById('dot-' + probIdx);
+    dot.classList.remove('current');
+    dot.classList.add(dotResults[probIdx]);
+
+    // Show answer feedback + solution
+    const afb = document.getElementById('answer-feedback');
+    afb.className = 'prac-feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+    afb.innerHTML = `<div class="fb-header">${isCorrect ? '✓ Correct Answer' : '✗ Incorrect'}</div>${isCorrect ? 'Well done! Check the full solution below.' : `The correct answer is <strong>${p.answer}</strong>. Review the solution below.`}`;
+
+    // Solution
+    const solBox = document.getElementById('solution-box');
+    solBox.innerHTML = `<div class="sol-step-label">Full Solution</div><div class="sol-steps">${p.solution}<br><span class="sol-answer-pill">Answer: ${p.answer}</span></div>`;
+
+    document.getElementById('phase-solution').style.display = 'block';
+
+    const nextBtn = document.getElementById('next-btn');
+    const isLast = probIdx === PROBLEMS.length - 1;
+    nextBtn.textContent = isLast ? 'See Results →' : 'Next Problem →';
+    document.getElementById('prac-score').textContent = `Score: ${score}`;
+
+    phase = 'done';
+  }
+
+  function nextProblem() {
+    if (currentIdx === PROBLEMS.length - 1) {
+      showFinished();
+      return;
+    }
+    currentIdx++;
+    loadProblem(currentIdx);
+    document.getElementById('prac-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showFinished() {
+    document.getElementById('prac-card').style.display = 'none';
+    document.getElementById('prac-finished').style.display = 'block';
+    document.getElementById('prac-progress').style.width = '100%';
+
+    const maxScore = PROBLEMS.length * 2;
+    const pct = Math.round((score / maxScore) * 100);
+    document.getElementById('finish-score').textContent = `${score} / ${maxScore} points (${pct}%)`;
+
+    let msg = '';
+    if (pct >= 90) msg = "Outstanding! You're state-ready. Your method identification is sharp and your calculations are clean.";
+    else if (pct >= 70) msg = "Solid performance! Review the problems you missed — pay attention to the method signals and gotchas.";
+    else if (pct >= 50) msg = "Good effort. Focus on the Quick Ref tab to reinforce when each method applies, then try again.";
+    else msg = "Keep practicing! Review the formula cards and gotchas in each tab, then come back and try again.";
+
+    document.getElementById('finish-msg').textContent = msg;
+  }
+
+  function restartPractice() {
+    document.getElementById('prac-card').style.display = 'block';
+    document.getElementById('prac-finished').style.display = 'none';
+    initPractice();
   }
 </script>
 </body>
