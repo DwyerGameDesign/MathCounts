@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATHCOUNTS · Counting & Probability · State Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0e14;
+    --surface: #13151e;
+    --surface2: #1a1d29;
+    --border: #2a2d3e;
+    --gold: #f0b429;
+    --gold-dim: #b8870f;
+    --teal: #00d4aa;
+    --red: #ff5f6d;
+    --blue: #5b8dee;
+    --text: #e8eaf0;
+    --text-dim: #8890a8;
+    --text-muted: #555c72;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(240,180,41,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,180,41,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .everything { position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 48px 40px 0;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6vw, 68px);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--text);
+    letter-spacing: -1px;
+  }
+
+  h1 span { color: var(--gold); }
+
+  .subtitle {
+    margin-top: 14px;
+    font-size: 15px;
+    color: var(--text-dim);
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 32px 0 0;
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-top: 0;
+  }
+
+  .tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 18px 22px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .tab:hover { color: var(--text-dim); }
+
+  .tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+
+  .panel { display: none; }
+  .panel.active {
+    display: block;
+    animation: fadeIn 0.25s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION TITLES ── */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-block {
+    margin-bottom: 40px;
+  }
+
+  /* ── FORMULA CARDS ── */
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .formula-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .formula-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--gold);
+  }
+
+  .formula-card.blue::before { background: var(--blue); }
+  .formula-card.teal::before { background: var(--teal); }
+  .formula-card.red::before  { background: var(--red); }
+
+  .formula-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .formula-card .formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .formula-card.blue .formula { color: var(--blue); }
+  .formula-card.teal .formula { color: var(--teal); }
+  .formula-card.red  .formula { color: var(--red); }
+
+  .formula-card .desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ── APPROACH BOX ── */
+  .approach {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 26px;
+    margin-bottom: 8px;
+  }
+
+  .approach h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .step:last-child { margin-bottom: 0; }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    background: var(--gold);
+    color: var(--bg);
+    border-radius: 50%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .approach.blue .step-num { background: var(--blue); }
+  .approach.teal .step-num { background: var(--teal); }
+
+  .step-text {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    padding-top: 3px;
+  }
+
+  .step-text strong { color: var(--text); font-weight: 500; }
+
+  /* ── GOTCHA CARDS ── */
+  .gotcha-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .gotcha-card {
+    background: var(--surface);
+    border: 1px solid #3a2020;
+    border-radius: 8px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .gotcha-card:hover {
+    border-color: var(--red);
+    background: #18151a;
+  }
+
+  .gotcha-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .gotcha-icon {
+    font-size: 18px;
+  }
+
+  .gotcha-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--red);
+    flex: 1;
+  }
+
+  .gotcha-toggle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+  }
+
+  .gotcha-card.open .gotcha-toggle {
+    transform: rotate(45deg);
+    color: var(--red);
+  }
+
+  .gotcha-body {
+    display: none;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    border-top: 1px solid #3a2020;
+    padding-top: 12px;
+  }
+
+  .gotcha-body strong { color: var(--text); font-weight: 500; }
+
+  .gotcha-card.open .gotcha-body {
+    display: block;
+    animation: fadeIn 0.2s ease;
+  }
+
+  /* ── EXAMPLE PROBLEMS ── */
+  .example-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .example-question {
+    padding: 18px 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: background 0.15s;
+  }
+
+  .example-question:hover { background: var(--surface2); }
+
+  .ex-num {
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    background: rgba(240,180,41,0.1);
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-top: 2px;
+    border: 1px solid rgba(240,180,41,0.2);
+  }
+
+  .ex-q {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .ex-arrow {
+    flex-shrink: 0;
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    transition: transform 0.2s;
+  }
+
+  .example-card.open .ex-arrow {
+    transform: rotate(90deg);
+    color: var(--gold);
+  }
+
+  .example-solution {
+    display: none;
+    padding: 18px 22px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(240,180,41,0.03);
+  }
+
+  .example-card.open .example-solution {
+    display: block;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .sol-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .sol-text {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .sol-text strong { color: var(--gold); }
+  .sol-text .ans {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--teal);
+    background: rgba(0,212,170,0.08);
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,212,170,0.2);
+  }
+
+  /* ── QUICK REFERENCE TABLE ── */
+  .q-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .q-table thead tr {
+    background: var(--surface2);
+  }
+
+  .q-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .q-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+
+  .q-table tr:last-child td { border-bottom: none; }
+
+  .q-table tbody tr:hover td {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  .q-table .mono {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--blue);
+    font-size: 12px;
+  }
+
+  .q-table .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin: 2px;
+  }
+
+  .tag-gold { background: rgba(240,180,41,0.1); color: var(--gold); border: 1px solid rgba(240,180,41,0.2); }
+  .tag-blue { background: rgba(91,141,238,0.1); color: var(--blue); border: 1px solid rgba(91,141,238,0.2); }
+  .tag-teal { background: rgba(0,212,170,0.1); color: var(--teal); border: 1px solid rgba(0,212,170,0.2); }
+
+  /* ── REMEMBER PILLS ── */
+  .remember-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .remember-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .pill-icon { font-size: 16px; flex-shrink: 0; }
+
+  .pill-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .pill-text strong { color: var(--teal); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    header, .tab-bar, .content { padding-left: 20px; padding-right: 20px; }
+    h1 { font-size: 36px; }
+    .tab { padding: 14px 12px; font-size: 10px; }
+    .formula-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="everything">
+
+<header>
+  <div class="badge">State Level · Counting &amp; Probability</div>
+  <h1>MATHCOUNTS<br><span>Cheat Sheet</span></h1>
+  <p class="subtitle">Permutations &amp; Combinations · Probability · Complementary Counting</p>
+  <div class="divider"></div>
+</header>
+
+<nav class="tab-bar">
+  <div class="tab active" onclick="showTab('perm')">P &amp; C</div>
+  <div class="tab" onclick="showTab('prob')">Probability</div>
+  <div class="tab" onclick="showTab('comp')">Complementary</div>
+  <div class="tab" onclick="showTab('ref')">Quick Ref</div>
+</nav>
+
+<main class="content">
+
+  <!-- ═══════════════════════════════════════════
+       TAB 1 · PERMUTATIONS & COMBINATIONS
+  ═══════════════════════════════════════════ -->
+  <section class="panel active" id="tab-perm">
+
+    <div class="section-block">
+      <div class="section-label">Core Formulas</div>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="label">Permutation — Order Matters</div>
+          <div class="formula">P(n,r) = n! / (n−r)!</div>
+          <div class="desc">Arrange <em>r</em> items from <em>n</em> distinct items. Think: <em>passwords, race placements, seating in a row.</em></div>
+        </div>
+        <div class="formula-card blue">
+          <div class="label">Combination — Order Doesn't Matter</div>
+          <div class="formula">C(n,r) = n! / (r!(n−r)!)</div>
+          <div class="desc">Choose <em>r</em> items from <em>n</em>. Think: <em>committees, hands of cards, pizza toppings.</em></div>
+        </div>
+        <div class="formula-card teal">
+          <div class="label">Permutations with Repetition</div>
+          <div class="formula">n! / (a! · b! · c! …)</div>
+          <div class="desc">Arrange items where some are identical. <em>Ex: letters in "BANANA" = 6!/(3!·2!·1!)</em></div>
+        </div>
+        <div class="formula-card red">
+          <div class="label">Circular Permutations</div>
+          <div class="formula">(n−1)!</div>
+          <div class="desc">Arranging n items around a circle. One item is "fixed" to remove rotational duplicates. Necklaces = (n−1)!/2.</div>
+        </div>
+        <div class="formula-card blue">
+          <div class="label">Stars &amp; Bars (Distributions)</div>
+          <div class="formula">C(n+k−1, k−1)</div>
+          <div class="desc">Distribute <em>n</em> identical items into <em>k</em> distinct bins (zeros allowed). <em>Ex: cookies into jars.</em></div>
+        </div>
+        <div class="formula-card">
+          <div class="label">Derangements (Nothing in Place)</div>
+          <div class="formula">D(n) = n!·Σ(−1)ᵏ/k!</div>
+          <div class="desc">Permutations where <strong>no item</strong> appears in its original position. D(n) ≈ n!/e. D(1)=0, D(2)=1, D(3)=2, D(4)=9.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">How to Approach Problems</div>
+      <div class="approach">
+        <h3>The Decision Framework</h3>
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Does order matter?</strong> If swapping two items gives a different outcome → Permutation. If not → Combination. Ask: "Is ABC the same as BAC?"</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Are items identical or distinct?</strong> If some items repeat (letters, balls of same color), use multinomial. If all distinct, standard P/C.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Are there restrictions?</strong> Handle restrictions first — fix constrained items, then count the rest freely.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Is it a distribution problem?</strong> Identical items into bins → Stars &amp; Bars. Distinct items into bins → exponential counting (kⁿ).</div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Check if complementary counting is easier:</strong> If the restriction is "at least one" or "not all," often it's faster to count the opposite.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Gotchas — Click to Expand</div>
+      <div class="gotcha-grid">
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Circular vs. Linear Seating</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">In a <strong>line</strong>: n! arrangements. In a <strong>circle</strong>: (n−1)! arrangements because rotations are the same. <strong>Necklaces</strong> also remove reflections: (n−1)!/2. Don't forget which one the problem is asking!</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">"At Least" Restrictions</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Problems saying "at least one woman" are almost always easier with complementary: <strong>Total − (none of the restricted type)</strong>. Don't do painful casework when you don't have to.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Treating Identical Items as Distinct</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">If two red balls are considered identical, you <strong>must divide</strong> by the factorial of duplicates. Forgetting this is the #1 overcounting mistake. Always ask: "Are these items actually distinguishable?"</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">People "Together" Trick</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">When a group must stay together, <strong>glue them</strong> into one "super-item." Count arrangements of (remaining + 1 super-item), then multiply by arrangements within the group. Don't forget the internal arrangements!</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Stars &amp; Bars Pitfalls</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Stars &amp; Bars works for <strong>non-negative integers only</strong>. If each bin must have <em>at least 1</em>, subtract 1 from each bin first: give everyone 1, then distribute the remainder freely. New formula: C((n−k)+(k−1), k−1).</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Choosing vs. Arranging Sub-Groups</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Selecting a committee of 3 from 10 is C(10,3). Selecting and then ranking them (president, VP, secretary) is P(10,3). The difference is the extra 3! factor for internal ordering.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Practice Problems</div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 01</span>
+          <span class="ex-q">In how many ways can 8 people be seated at a round table if two specific people must NOT sit next to each other?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Use complementary counting. <strong>Total circular arrangements</strong> = (8−1)! = 5040.<br><br>
+            <strong>Bad arrangements</strong> (the two sit together): Glue them as a unit → 7 items in a circle = (7−1)! = 720. The pair can swap internally in 2! = 2 ways. So bad = 720 × 2 = 1440.<br><br>
+            <strong>Answer = 5040 − 1440 = 3600</strong>
+            <span class="ans">3600</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 02</span>
+          <span class="ex-q">How many ways can the letters of "MISSISSIPPI" be arranged?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Count letter frequencies: M=1, I=4, S=4, P=2. Total = 11 letters.<br><br>
+            Apply multinomial formula: <strong>11! / (1! · 4! · 4! · 2!)</strong><br><br>
+            = 39,916,800 / (1 · 24 · 24 · 2) = 39,916,800 / 1152
+            <span class="ans">34,650</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 03</span>
+          <span class="ex-q">In how many ways can 10 identical candies be distributed among 4 children if each child must receive at least 1?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Since each child needs ≥1, give each child 1 candy first (uses 4). We now distribute <strong>6 remaining</strong> among 4 children with no restriction.<br><br>
+            Stars &amp; Bars: C(6 + 4 − 1, 4 − 1) = C(9, 3)
+            <span class="ans">84</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TAB 2 · PROBABILITY
+  ═══════════════════════════════════════════ -->
+  <section class="panel" id="tab-prob">
+
+    <div class="section-block">
+      <div class="section-label">Core Formulas</div>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="label">Basic Probability</div>
+          <div class="formula">P(A) = favourable / total</div>
+          <div class="desc">All outcomes must be equally likely! If they aren't, you can't just count — you need weighted probabilities.</div>
+        </div>
+        <div class="formula-card blue">
+          <div class="label">Complement Rule</div>
+          <div class="formula">P(A) = 1 − P(Aᶜ)</div>
+          <div class="desc">The probability something happens = 1 minus the probability it doesn't. Essential for "at least one" problems.</div>
+        </div>
+        <div class="formula-card teal">
+          <div class="label">Multiplication Rule</div>
+          <div class="formula">P(A∩B) = P(A)·P(B|A)</div>
+          <div class="desc">For dependent events. If independent: P(A∩B) = P(A)·P(B). "AND" = multiply.</div>
+        </div>
+        <div class="formula-card">
+          <div class="label">Addition Rule</div>
+          <div class="formula">P(A∪B) = P(A)+P(B)−P(A∩B)</div>
+          <div class="desc">For any two events. If mutually exclusive (no overlap): just P(A) + P(B). "OR" = add, then subtract overlap.</div>
+        </div>
+        <div class="formula-card red">
+          <div class="label">Expected Value</div>
+          <div class="formula">E = Σ xᵢ · P(xᵢ)</div>
+          <div class="desc">Weighted average of all outcomes. Multiply each outcome by its probability and sum them up. Common in games/dice problems.</div>
+        </div>
+        <div class="formula-card blue">
+          <div class="label">Geometric Probability</div>
+          <div class="formula">P = favourable area / total area</div>
+          <div class="desc">When the sample space is a region. Set up a ratio of areas, lengths, or volumes. Watch for symmetry!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">How to Approach Problems</div>
+      <div class="approach blue">
+        <h3>Probability Problem Framework</h3>
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Identify the sample space:</strong> What are all possible outcomes? Are they equally likely? (Dice rolls: yes. Random points: use area.)</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Are events independent or dependent?</strong> Drawing without replacement = dependent. Flipping separate coins = independent. This determines if you multiply or use conditional probability.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>"At least one" → use complement:</strong> P(at least one) = 1 − P(none). Saves enormous casework.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Multi-stage processes:</strong> Draw a tree or use multiplication for sequential events. Track how the denominator shrinks (without replacement).</div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Simplify the fraction:</strong> MATHCOUNTS often wants a simplified fraction or a decimal. Always double-check your answer is ≤ 1!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Gotchas — Click to Expand</div>
+      <div class="gotcha-grid">
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">With vs. Without Replacement</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body"><strong>Without replacement:</strong> denominator shrinks each draw. If you draw 2 from 10, first draw is /10, second is /9. <strong>With replacement:</strong> denominator stays the same. The problem will usually specify — if it doesn't, assume WITHOUT replacement for physical objects like cards, marbles.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Equally Likely Outcomes</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">You can only use "favorable/total" if ALL outcomes are equally likely. A loaded die, a spinner with unequal sectors, or two different coins — you can't just count outcomes, you must weight by probability.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Confusing AND / OR</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">"A <strong>and</strong> B" = intersection = multiply probabilities. "A <strong>or</strong> B" = union = add then subtract overlap. Many students add when they should multiply and vice versa. Keyword scan: look for "and/both" vs. "or/either."</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Order Matters in Probability</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">When computing P(exactly 2 heads in 3 flips), don't forget to count HHT, HTH, THH as separate outcomes. If you use combinations in numerator, use combinations in denominator too — stay consistent. Mixing ordered/unordered breaks everything.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">The "First Card" Trap</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">When finding P(2 aces drawn from 52 cards), you can use C(4,2)/C(52,2) = 6/1326. Don't compute (4/52)×(3/51) = 1/221 thinking these are different — they equal the same thing! Both methods work but you must be consistent.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Expected Value ≠ Most Likely</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Expected value is the <strong>long-run average</strong>, not the most common outcome. E(rolling a die) = 3.5, which you can never actually roll. Don't confuse EV with the mode or median of outcomes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Practice Problems</div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 01</span>
+          <span class="ex-q">A bag has 5 red and 4 blue marbles. Two marbles are drawn without replacement. What is the probability both are red?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            <strong>Method 1 (Sequential):</strong> P(red) × P(red | first was red) = (5/9) × (4/8) = 20/72 = 5/18<br><br>
+            <strong>Method 2 (Combinations):</strong> C(5,2)/C(9,2) = 10/36 = 5/18 ✓
+            <span class="ans">5/18</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 02</span>
+          <span class="ex-q">What is the probability of rolling at least one 6 when rolling two dice?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Use the complement: P(at least one 6) = 1 − P(no 6s).<br><br>
+            P(no 6 on one die) = 5/6. Two independent dice:<br>
+            P(no 6s) = (5/6)² = 25/36<br><br>
+            P(at least one 6) = 1 − 25/36
+            <span class="ans">11/36</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 03</span>
+          <span class="ex-q">A game pays $5 if you flip 3 heads with 3 coins, $2 for exactly 2 heads, and nothing otherwise. What is the expected value?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            P(3 heads) = (1/2)³ = 1/8. Payout: $5<br>
+            P(2 heads) = C(3,2)·(1/8) = 3/8. Payout: $2<br>
+            P(else) = 4/8. Payout: $0<br><br>
+            E = 5·(1/8) + 2·(3/8) + 0·(4/8) = 5/8 + 6/8
+            <span class="ans">$1.375 (= 11/8)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TAB 3 · COMPLEMENTARY COUNTING
+  ═══════════════════════════════════════════ -->
+  <section class="panel" id="tab-comp">
+
+    <div class="section-block">
+      <div class="section-label">The Core Idea</div>
+      <div class="formula-grid">
+        <div class="formula-card teal">
+          <div class="label">Complementary Counting</div>
+          <div class="formula">Desired = Total − Unwanted</div>
+          <div class="desc">Count everything, then subtract what you <em>don't</em> want. Use when the restriction is complex but the opposite is simple.</div>
+        </div>
+        <div class="formula-card">
+          <div class="label">Inclusion-Exclusion (PIE)</div>
+          <div class="formula">|A∪B| = |A|+|B|−|A∩B|</div>
+          <div class="desc">For 3 sets: |A∪B∪C| = |A|+|B|+|C| − |A∩B| − |A∩C| − |B∩C| + |A∩B∩C|</div>
+        </div>
+        <div class="formula-card blue">
+          <div class="label">Derangements (Complement)</div>
+          <div class="formula">D(n) = n! − (arrangements with ≥1 fixed)</div>
+          <div class="desc">Use PIE to subtract arrangements where at least one item is in its original position. Shortcut: D(n) ≈ round(n!/e)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">When to Use Complementary Counting</div>
+      <div class="approach teal">
+        <h3>Trigger Words &amp; Patterns</h3>
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>"At least one":</strong> Almost always easier to do 1 − P(none). Counting "at least one of X" via casework means summing exactly 1, exactly 2, etc. — much slower.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>"Not all the same" / "Not all different":</strong> The complement (all same, or all different) is usually much simpler to count directly.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Many cases, simple opposite:</strong> If direct counting requires 5+ cases but the complement is 1 calculation, go complementary.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>PIE trigger — "divisible by A OR B":</strong> Count divisible by A, add divisible by B, subtract divisible by both (LCM). Classic number theory + counting hybrid.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Restriction avoidance:</strong> "No two adjacent" or "none in a row" often yields 2–3 casework situations directly, but complement (some are adjacent) is fewer and cleaner.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Gotchas — Click to Expand</div>
+      <div class="gotcha-grid">
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Forgetting to Account for All Cases</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">When you subtract the unwanted, make sure your "unwanted" set is <strong>exactly</strong> what you don't want — not a subset. If you want "not all red" and you only subtract "all red," you're correct. But if the problem is more complex, a Venn diagram helps ensure you've covered every case.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Double-Counting in PIE</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">In PIE, things in multiple sets get added multiple times. The alternating +/− pattern fixes this. For 2 sets: add both, subtract overlap. For 3 sets: add all three, subtract pairwise overlaps, add back the triple overlap. Mess up the sign and you'll over- or undercount.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Total Must Match Your Space</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Your "Total" must use the <strong>same rules</strong> as your desired count. If you're counting ordered pairs, the total must be ordered pairs. If you're counting subsets, total must be subsets. Mixing ordered and unordered totals is a very sneaky mistake.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Complementary with Probability</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">In probability, complementary is P(A) = 1 − P(Aᶜ). In counting, it's |A| = Total − |Aᶜ|. These are the same idea but apply differently. Make sure you know if you're computing a <strong>count</strong> or a <strong>probability</strong> — the setup differs.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">PIE Denominator Stays Fixed</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">When using PIE for probability, the denominator of all fractions should be the same total sample space. Don't reduce individual fractions before adding/subtracting — you'll lose the common denominator and create arithmetic errors.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Practice Problems</div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 01</span>
+          <span class="ex-q">How many integers from 1 to 100 are divisible by 3 OR by 5?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution — PIE</div>
+          <div class="sol-text">
+            Divisible by 3: ⌊100/3⌋ = <strong>33</strong><br>
+            Divisible by 5: ⌊100/5⌋ = <strong>20</strong><br>
+            Divisible by both (15): ⌊100/15⌋ = <strong>6</strong><br><br>
+            PIE: 33 + 20 − 6
+            <span class="ans">47</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 02</span>
+          <span class="ex-q">How many 4-letter strings (A–Z) have at least one repeated letter?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution — Complementary</div>
+          <div class="sol-text">
+            <strong>Total</strong> 4-letter strings = 26⁴ = 456,976<br><br>
+            <strong>All distinct</strong> letters = 26 × 25 × 24 × 23 = 358,800<br><br>
+            At least one repeat = 456,976 − 358,800
+            <span class="ans">98,176</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 03</span>
+          <span class="ex-q">In a class of 30 students, 18 play soccer, 15 play basketball, and 7 play both. How many play neither?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution — PIE + Complement</div>
+          <div class="sol-text">
+            Students playing soccer OR basketball:<br>
+            |S ∪ B| = 18 + 15 − 7 = <strong>26</strong><br><br>
+            Students playing neither = Total − |S ∪ B|<br>
+            = 30 − 26
+            <span class="ans">4 students</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TAB 4 · QUICK REFERENCE
+  ═══════════════════════════════════════════ -->
+  <section class="panel" id="tab-ref">
+
+    <div class="section-block">
+      <div class="section-label">Problem Type Identifier</div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+        <table class="q-table">
+          <thead>
+            <tr>
+              <th>Keyword / Setup</th>
+              <th>Strategy</th>
+              <th>Formula</th>
+              <th>Watch For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>"Arrange", "order", "rank", seats in a row</td>
+              <td><span class="tag tag-gold">Permutation</span></td>
+              <td class="mono">P(n,r) = n!/(n−r)!</td>
+              <td>Identical items? Divide by duplicates.</td>
+            </tr>
+            <tr>
+              <td>"Choose", "select", "committee", "group"</td>
+              <td><span class="tag tag-blue">Combination</span></td>
+              <td class="mono">C(n,r) = n!/(r!(n−r)!)</td>
+              <td>If roles differ (pres/VP), it's a permutation.</td>
+            </tr>
+            <tr>
+              <td>Round table, circular arrangement, necklace</td>
+              <td><span class="tag tag-gold">Circular Perm</span></td>
+              <td class="mono">(n−1)! or (n−1)!/2</td>
+              <td>Necklace = divide by 2 for flips.</td>
+            </tr>
+            <tr>
+              <td>Distribute identical items into bins</td>
+              <td><span class="tag tag-teal">Stars &amp; Bars</span></td>
+              <td class="mono">C(n+k−1, k−1)</td>
+              <td>At least 1 each? Subtract 1 per bin first.</td>
+            </tr>
+            <tr>
+              <td>"At least one", "not all", many complex cases</td>
+              <td><span class="tag tag-teal">Complementary</span></td>
+              <td class="mono">Total − Unwanted</td>
+              <td>Ensure total and unwanted use same counting method.</td>
+            </tr>
+            <tr>
+              <td>"OR", divisible by X or Y, union of conditions</td>
+              <td><span class="tag tag-blue">PIE</span></td>
+              <td class="mono">|A|+|B|−|A∩B|</td>
+              <td>3+ sets? Alternate + and − by subset size.</td>
+            </tr>
+            <tr>
+              <td>Sequential draws, flips, rolls (without replacement)</td>
+              <td><span class="tag tag-gold">Dependent Prob</span></td>
+              <td class="mono">P(A)·P(B|A)</td>
+              <td>Denominator shrinks each step.</td>
+            </tr>
+            <tr>
+              <td>Independent events (separate coins, dice)</td>
+              <td><span class="tag tag-gold">Independent Prob</span></td>
+              <td class="mono">P(A)·P(B)</td>
+              <td>Confirm truly independent — no shared space.</td>
+            </tr>
+            <tr>
+              <td>"Expected value", games, prizes, average outcome</td>
+              <td><span class="tag tag-blue">Expected Value</span></td>
+              <td class="mono">Σ xᵢ·P(xᵢ)</td>
+              <td>Sum of all probabilities must = 1.</td>
+            </tr>
+            <tr>
+              <td>Point/region in shape, random on a line/circle</td>
+              <td><span class="tag tag-teal">Geometric Prob</span></td>
+              <td class="mono">Area / Total Area</td>
+              <td>Set up coordinate system; look for symmetry.</td>
+            </tr>
+            <tr>
+              <td>Letters with repeats (MISSISSIPPI, BANANA…)</td>
+              <td><span class="tag tag-gold">Multinomial</span></td>
+              <td class="mono">n! / (a!·b!·c!…)</td>
+              <td>Count each distinct letter's frequency.</td>
+            </tr>
+            <tr>
+              <td>No item in original position (secret santa, hats)</td>
+              <td><span class="tag tag-blue">Derangement</span></td>
+              <td class="mono">D(n) ≈ n!/e</td>
+              <td>D(1)=0, D(2)=1, D(3)=2, D(4)=9, D(5)=44</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Things to Always Remember</div>
+      <div class="remember-grid">
+        <div class="remember-pill">
+          <span class="pill-icon">🔢</span>
+          <div class="pill-text"><strong>0! = 1</strong>, not 0. This trips people up on C(n,0) and edge cases.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">🎲</span>
+          <div class="pill-text">Probabilities must <strong>sum to 1</strong>. Always sanity-check your answer isn't > 1.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">🔄</span>
+          <div class="pill-text">C(n,r) = <strong>C(n, n−r)</strong>. Choosing 7 from 10 = choosing the 3 to leave out.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">📐</span>
+          <div class="pill-text">PIE: alternate <strong>+ for odd</strong> subsets, <strong>− for even</strong> subsets. Don't flip the signs.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">🧲</span>
+          <div class="pill-text">"Glue" technique: treat a group as <strong>one unit</strong>, then multiply by the unit's internal arrangements.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">🔁</span>
+          <div class="pill-text">Derangements: D(1)=0, D(2)=1, D(3)=2, D(4)=9, D(5)=44. <strong>Memorize D(2)–D(5).</strong></div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">⭕</span>
+          <div class="pill-text">Circular: fix one person, arrange the <strong>remaining (n−1)</strong> relative to them.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">📊</span>
+          <div class="pill-text">Stars &amp; Bars: works <strong>only for identical items</strong>. Distinct items in bins = kⁿ.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">🧩</span>
+          <div class="pill-text">For casework, make sure your cases are <strong>mutually exclusive and exhaustive</strong> — no overlaps, no gaps.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">🎯</span>
+          <div class="pill-text">Complement is your <strong>best friend</strong> at state level. If counting directly needs 3+ cases, try flipping it.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">📌</span>
+          <div class="pill-text">n items, <strong>k chosen</strong>: combinations don't care about order. If selecting for different roles → permutation.</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">⚡</span>
+          <div class="pill-text">Geometric probability: <strong>reduce to 1D or 2D</strong> areas/lengths. Use symmetry whenever possible to simplify.</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function toggleGotcha(card) {
+    card.classList.toggle('open');
+  }
+
+  function toggleExample(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
