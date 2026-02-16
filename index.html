@@ -1,858 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MATHCOUNTS · Counting & Probability · State Prep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0c0e14;
-    --surface: #13151e;
-    --surface2: #1a1d29;
-    --border: #2a2d3e;
-    --gold: #f0b429;
-    --gold-dim: #b8870f;
-    --teal: #00d4aa;
-    --red: #ff5f6d;
-    --blue: #5b8dee;
-    --text: #e8eaf0;
-    --text-dim: #8890a8;
-    --text-muted: #555c72;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Grid overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(240,180,41,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(240,180,41,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .everything { position: relative; z-index: 1; }
-
-  /* ── HEADER ── */
-  header {
-    padding: 48px 40px 0;
-    max-width: 960px;
-    margin: 0 auto;
-  }
-
-  .badge {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid var(--gold-dim);
-    padding: 4px 10px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-  }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(38px, 6vw, 68px);
-    font-weight: 900;
-    line-height: 1.0;
-    color: var(--text);
-    letter-spacing: -1px;
-  }
-
-  h1 span { color: var(--gold); }
-
-  .subtitle {
-    margin-top: 14px;
-    font-size: 15px;
-    color: var(--text-dim);
-    font-weight: 300;
-    letter-spacing: 0.3px;
-  }
-
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    margin: 32px 0 0;
-  }
-
-  /* ── TABS ── */
-  .tab-bar {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: flex;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-    margin-top: 0;
-  }
-
-  .tab {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    padding: 18px 22px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
-    user-select: none;
-  }
-
-  .tab:hover { color: var(--text-dim); }
-
-  .tab.active {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
-  }
-
-  /* ── MAIN CONTENT ── */
-  .content {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 40px 80px;
-  }
-
-  .panel { display: none; }
-  .panel.active {
-    display: block;
-    animation: fadeIn 0.25s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── SECTION TITLES ── */
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .section-block {
-    margin-bottom: 40px;
-  }
-
-  /* ── FORMULA CARDS ── */
-  .formula-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 16px;
-    margin-bottom: 8px;
-  }
-
-  .formula-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 22px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .formula-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: var(--gold);
-  }
-
-  .formula-card.blue::before { background: var(--blue); }
-  .formula-card.teal::before { background: var(--teal); }
-  .formula-card.red::before  { background: var(--red); }
-
-  .formula-card .label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-  }
-
-  .formula-card .formula {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--gold);
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  .formula-card.blue .formula { color: var(--blue); }
-  .formula-card.teal .formula { color: var(--teal); }
-  .formula-card.red  .formula { color: var(--red); }
-
-  .formula-card .desc {
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.6;
-  }
-
-  /* ── APPROACH BOX ── */
-  .approach {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 24px 26px;
-    margin-bottom: 8px;
-  }
-
-  .approach h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 14px;
-  }
-
-  .step {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    margin-bottom: 12px;
-  }
-
-  .step:last-child { margin-bottom: 0; }
-
-  .step-num {
-    flex-shrink: 0;
-    width: 24px; height: 24px;
-    background: var(--gold);
-    color: var(--bg);
-    border-radius: 50%;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .approach.blue .step-num { background: var(--blue); }
-  .approach.teal .step-num { background: var(--teal); }
-
-  .step-text {
-    font-size: 14px;
-    color: var(--text-dim);
-    line-height: 1.6;
-    padding-top: 3px;
-  }
-
-  .step-text strong { color: var(--text); font-weight: 500; }
-
-  /* ── GOTCHA CARDS ── */
-  .gotcha-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px;
-  }
-
-  .gotcha-card {
-    background: var(--surface);
-    border: 1px solid #3a2020;
-    border-radius: 8px;
-    padding: 18px 20px;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    position: relative;
-  }
-
-  .gotcha-card:hover {
-    border-color: var(--red);
-    background: #18151a;
-  }
-
-  .gotcha-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .gotcha-icon {
-    font-size: 18px;
-  }
-
-  .gotcha-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--red);
-    flex: 1;
-  }
-
-  .gotcha-toggle {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
-    color: var(--text-muted);
-    transition: transform 0.2s;
-  }
-
-  .gotcha-card.open .gotcha-toggle {
-    transform: rotate(45deg);
-    color: var(--red);
-  }
-
-  .gotcha-body {
-    display: none;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.65;
-    border-top: 1px solid #3a2020;
-    padding-top: 12px;
-  }
-
-  .gotcha-body strong { color: var(--text); font-weight: 500; }
-
-  .gotcha-card.open .gotcha-body {
-    display: block;
-    animation: fadeIn 0.2s ease;
-  }
-
-  /* ── EXAMPLE PROBLEMS ── */
-  .example-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 14px;
-    overflow: hidden;
-  }
-
-  .example-question {
-    padding: 18px 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    transition: background 0.15s;
-  }
-
-  .example-question:hover { background: var(--surface2); }
-
-  .ex-num {
-    flex-shrink: 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--gold);
-    background: rgba(240,180,41,0.1);
-    padding: 3px 8px;
-    border-radius: 3px;
-    margin-top: 2px;
-    border: 1px solid rgba(240,180,41,0.2);
-  }
-
-  .ex-q {
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.6;
-    flex: 1;
-  }
-
-  .ex-arrow {
-    flex-shrink: 0;
-    font-size: 16px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    transition: transform 0.2s;
-  }
-
-  .example-card.open .ex-arrow {
-    transform: rotate(90deg);
-    color: var(--gold);
-  }
-
-  .example-solution {
-    display: none;
-    padding: 18px 22px 20px;
-    border-top: 1px solid var(--border);
-    background: rgba(240,180,41,0.03);
-  }
-
-  .example-card.open .example-solution {
-    display: block;
-    animation: fadeIn 0.2s ease;
-  }
-
-  .sol-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-
-  .sol-text {
-    font-size: 13.5px;
-    color: var(--text-dim);
-    line-height: 1.7;
-  }
-
-  .sol-text strong { color: var(--gold); }
-  .sol-text .ans {
-    display: inline-block;
-    margin-top: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    color: var(--teal);
-    background: rgba(0,212,170,0.08);
-    padding: 6px 14px;
-    border-radius: 4px;
-    border: 1px solid rgba(0,212,170,0.2);
-  }
-
-  /* ── QUICK REFERENCE TABLE ── */
-  .q-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-
-  .q-table thead tr {
-    background: var(--surface2);
-  }
-
-  .q-table th {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    padding: 12px 16px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .q-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    color: var(--text-dim);
-    vertical-align: top;
-  }
-
-  .q-table tr:last-child td { border-bottom: none; }
-
-  .q-table tbody tr:hover td {
-    background: var(--surface2);
-    color: var(--text);
-  }
-
-  .q-table .mono {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--blue);
-    font-size: 12px;
-  }
-
-  .q-table .tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    padding: 2px 7px;
-    border-radius: 3px;
-    margin: 2px;
-  }
-
-  .tag-gold { background: rgba(240,180,41,0.1); color: var(--gold); border: 1px solid rgba(240,180,41,0.2); }
-  .tag-blue { background: rgba(91,141,238,0.1); color: var(--blue); border: 1px solid rgba(91,141,238,0.2); }
-  .tag-teal { background: rgba(0,212,170,0.1); color: var(--teal); border: 1px solid rgba(0,212,170,0.2); }
-
-  /* ── REMEMBER PILLS ── */
-  .remember-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
-  }
-
-  .remember-pill {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 14px 16px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-
-  .pill-icon { font-size: 16px; flex-shrink: 0; }
-
-  .pill-text {
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.55;
-  }
-
-  .pill-text strong { color: var(--teal); }
-
-  /* ── PRACTICE TAB ── */
-  .prac-header {
-    margin-bottom: 28px;
-  }
-
-  .prac-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .prac-counter {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-  }
-
-  .prac-score {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--gold);
-    font-weight: 600;
-  }
-
-  .prac-progress-track {
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-bottom: 14px;
-  }
-
-  .prac-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--gold), var(--teal));
-    border-radius: 2px;
-    transition: width 0.4s ease;
-  }
-
-  .prac-dots {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .prac-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--border);
-    transition: background 0.3s;
-    flex-shrink: 0;
-  }
-
-  .prac-dot.correct { background: var(--teal); }
-  .prac-dot.wrong   { background: var(--red); }
-  .prac-dot.current { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
-
-  .prac-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px 30px;
-    min-height: 340px;
-    position: relative;
-    transition: border-color 0.3s;
-  }
-
-  .prac-card.correct-glow { border-color: var(--teal); box-shadow: 0 0 20px rgba(0,212,170,0.1); }
-  .prac-card.wrong-glow   { border-color: var(--red);  box-shadow: 0 0 20px rgba(255,95,109,0.1); }
-
-  .prac-topic {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .prac-topic::before {
-    content: '';
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-  }
-
-  .prac-question {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.55;
-    margin-bottom: 28px;
-  }
-
-  .prac-prompt {
-    font-size: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 14px;
-  }
-
-  .prac-choices {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .prac-choice {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    transition: border-color 0.15s, background 0.15s, transform 0.1s;
-    user-select: none;
-  }
-
-  .prac-choice:hover:not(.locked) {
-    border-color: var(--gold);
-    background: rgba(240,180,41,0.06);
-    transform: translateX(2px);
-  }
-
-  .prac-choice.locked { cursor: default; }
-
-  .prac-choice.selected-correct {
-    border-color: var(--teal);
-    background: rgba(0,212,170,0.08);
-  }
-
-  .prac-choice.selected-wrong {
-    border-color: var(--red);
-    background: rgba(255,95,109,0.08);
-  }
-
-  .prac-choice.reveal-correct {
-    border-color: rgba(0,212,170,0.4);
-    background: rgba(0,212,170,0.04);
-  }
-
-  .choice-key {
-    flex-shrink: 0;
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-muted);
-    transition: all 0.2s;
-  }
-
-  .prac-choice.selected-correct .choice-key { border-color: var(--teal); color: var(--teal); background: rgba(0,212,170,0.1); }
-  .prac-choice.selected-wrong  .choice-key { border-color: var(--red);  color: var(--red);  background: rgba(255,95,109,0.1); }
-  .prac-choice.reveal-correct  .choice-key { border-color: var(--teal); color: var(--teal); }
-
-  .choice-icon {
-    flex-shrink: 0;
-    font-size: 16px;
-    margin-top: 2px;
-  }
-
-  .choice-body { flex: 1; }
-
-  .choice-label {
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 500;
-    line-height: 1.4;
-    margin-bottom: 3px;
-  }
-
-  .choice-desc {
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-
-  .prac-feedback {
-    padding: 16px 18px;
-    border-radius: 8px;
-    font-size: 14px;
-    line-height: 1.65;
-    color: var(--text-dim);
-    margin-top: 6px;
-  }
-
-  .prac-feedback.correct-fb {
-    background: rgba(0,212,170,0.07);
-    border: 1px solid rgba(0,212,170,0.25);
-  }
-
-  .prac-feedback.wrong-fb {
-    background: rgba(255,95,109,0.07);
-    border: 1px solid rgba(255,95,109,0.25);
-  }
-
-  .prac-feedback .fb-header {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .correct-fb .fb-header { color: var(--teal); }
-  .wrong-fb   .fb-header { color: var(--red); }
-
-  .prac-feedback strong { color: var(--text); font-weight: 500; }
-
-  .prac-solution-box {
-    margin-top: 20px;
-    background: rgba(240,180,41,0.04);
-    border: 1px solid rgba(240,180,41,0.2);
-    border-radius: 8px;
-    padding: 18px 20px;
-  }
-
-  .sol-step-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-
-  .sol-steps {
-    font-size: 13.5px;
-    color: var(--text-dim);
-    line-height: 1.75;
-  }
-
-  .sol-steps strong { color: var(--gold); font-weight: 500; }
-
-  .sol-answer-pill {
-    display: inline-block;
-    margin-top: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--teal);
-    background: rgba(0,212,170,0.08);
-    padding: 8px 18px;
-    border-radius: 6px;
-    border: 1px solid rgba(0,212,170,0.25);
-  }
-
-  .prac-next-btn {
-    display: block;
-    margin: 24px auto 0;
-    background: var(--gold);
-    color: var(--bg);
-    border: none;
-    border-radius: 6px;
-    padding: 12px 28px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-  }
-
-  .prac-next-btn:hover {
-    background: #ffc93c;
-    transform: translateY(-1px);
-  }
-
-  .prac-finished {
-    text-align: center;
-    padding: 60px 20px;
-  }
-
-  .finish-star {
-    font-size: 56px;
-    color: var(--gold);
-    margin-bottom: 16px;
-    animation: pulse 1.5s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-
-  .finish-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    font-weight: 900;
-    color: var(--text);
-    margin-bottom: 12px;
-  }
-
-  .finish-score {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 22px;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-
-  .finish-msg {
-    font-size: 15px;
-    color: var(--text-dim);
-    line-height: 1.6;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    header, .tab-bar, .content { padding-left: 20px; padding-right: 20px; }
-    h1 { font-size: 36px; }
-    .tab { padding: 14px 12px; font-size: 10px; }
-    .formula-grid { grid-template-columns: 1fr; }
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="everything">
 
 <header>
-  <div class="badge">State Level · Counting &amp; Probability</div>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">
+    <span class="theme-icon">🌙</span>
+  </button>
+  <div class="badge">State Level · Counting &amp; Probability · Number Theory</div>
   <h1>MATHCOUNTS<br><span>Cheat Sheet</span></h1>
-  <p class="subtitle">Permutations &amp; Combinations · Probability · Complementary Counting</p>
+  <p class="subtitle">Permutations &amp; Combinations · Probability · Complementary Counting · Number Theory</p>
   <div class="divider"></div>
 </header>
 
@@ -860,8 +25,8 @@
   <div class="tab active" onclick="showTab('perm')">P &amp; C</div>
   <div class="tab" onclick="showTab('prob')">Probability</div>
   <div class="tab" onclick="showTab('comp')">Complementary</div>
+  <div class="tab" onclick="showTab('number')">Number Theory</div>
   <div class="tab" onclick="showTab('ref')">Quick Ref</div>
-  <div class="tab" onclick="showTab('practice')">⚡ Practice</div>
 </nav>
 
 <main class="content">
@@ -874,35 +39,129 @@
     <div class="section-block">
       <div class="section-label">Core Formulas</div>
       <div class="formula-grid">
-        <div class="formula-card">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
           <div class="label">Permutation — Order Matters</div>
           <div class="formula">P(n,r) = n! / (n−r)!</div>
           <div class="desc">Arrange <em>r</em> items from <em>n</em> distinct items. Think: <em>passwords, race placements, seating in a row.</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> How many ways can 5 runners finish in 1st, 2nd, and 3rd place?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">P(n,r) = n! / (n−r)!</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">P(5,3) = 5! / (5−3)!</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 5! / 2! = 120 / 2 = <strong>60 ways</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card blue">
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
           <div class="label">Combination — Order Doesn't Matter</div>
           <div class="formula">C(n,r) = n! / (r!(n−r)!)</div>
           <div class="desc">Choose <em>r</em> items from <em>n</em>. Think: <em>committees, hands of cards, pizza toppings.</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> A committee of 3 is chosen from 10 people. How many committees are possible?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">C(n,r) = n! / (r!(n−r)!)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">C(10,3) = 10! / (3!(10−3)!)</div>
+                <div class="formula-substituted">= 10! / (3!·7!)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 3,628,800 / (6·5,040) = 3,628,800 / 30,240 = <strong>120 committees</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card teal">
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
           <div class="label">Permutations with Repetition</div>
           <div class="formula">n! / (a! · b! · c! …)</div>
           <div class="desc">Arrange items where some are identical. <em>Ex: letters in "BANANA" = 6!/(3!·2!·1!)</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> How many ways can you arrange the letters in "MAMA"?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">n! / (a! · b! · c! …)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">4! / (2! · 2!)</div>
+                <div class="formula-note">M appears 2 times, A appears 2 times</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 24 / (2 · 2) = 24 / 4 = <strong>6 arrangements</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card red">
+        <div class="formula-card red" onclick="toggleFormulaExample(this)">
           <div class="label">Circular Permutations</div>
           <div class="formula">(n−1)!</div>
           <div class="desc">Arranging n items around a circle. One item is "fixed" to remove rotational duplicates. Necklaces = (n−1)!/2.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> How many ways can 6 people sit around a round table?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">(n−1)!</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">(6−1)! = 5!</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 5! = 120 = <strong>120 arrangements</strong>
+              </div>
+              <div class="formula-substitution" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);">
+                <em>For a necklace (flipable):</em> (6−1)!/2 = 120/2 = <strong>60 arrangements</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card blue">
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
           <div class="label">Stars &amp; Bars (Distributions)</div>
           <div class="formula">C(n+k−1, k−1)</div>
           <div class="desc">Distribute <em>n</em> identical items into <em>k</em> distinct bins (zeros allowed). <em>Ex: cookies into jars.</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Distribute 10 identical cookies among 4 children (some may get 0).</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">C(n+k−1, k−1)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">C(10+4−1, 4−1) = C(13, 3)</div>
+                <div class="formula-note">n = 10 cookies, k = 4 children</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 13! / (3!·10!) = <strong>286 ways</strong>
+              </div>
+              <div class="formula-substitution" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);">
+                <em>If each must get ≥1:</em> Give each 1 cookie first, then distribute remaining 6:<br>C(6+4−1, 4−1) = C(9, 3) = <strong>84 ways</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
           <div class="label">Derangements (Nothing in Place)</div>
           <div class="formula">D(n) = n!·Σ(−1)ᵏ/k!</div>
           <div class="desc">Permutations where <strong>no item</strong> appears in its original position. D(n) ≈ n!/e. D(1)=0, D(2)=1, D(3)=2, D(4)=9.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> In how many ways can 4 people each get the wrong hat?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">D(n) = n! − (arrangements with ≥1 fixed)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">D(4) = 4! − C(4,1)·3! + C(4,2)·2! − C(4,3)·1! + C(4,4)·0!</div>
+                <div class="formula-note">Using PIE: Total − (at least 1 correct)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 24 − 4·6 + 6·2 − 4·1 + 1·1 = 24 − 24 + 12 − 4 + 1 = <strong>9 ways</strong>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1051,35 +310,139 @@
     <div class="section-block">
       <div class="section-label">Core Formulas</div>
       <div class="formula-grid">
-        <div class="formula-card">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
           <div class="label">Basic Probability</div>
           <div class="formula">P(A) = favourable / total</div>
           <div class="desc">All outcomes must be equally likely! If they aren't, you can't just count — you need weighted probabilities.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> What's the probability of rolling an even number on a fair die?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">P(A) = favourable / total</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">P(even) = 3 / 6</div>
+                <div class="formula-note">Favourable: {2, 4, 6} = 3 | Total: {1, 2, 3, 4, 5, 6} = 6</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = <strong>1/2</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card blue">
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
           <div class="label">Complement Rule</div>
           <div class="formula">P(A) = 1 − P(Aᶜ)</div>
           <div class="desc">The probability something happens = 1 minus the probability it doesn't. Essential for "at least one" problems.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> What's the probability of rolling at least one 6 in 3 dice rolls?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">P(A) = 1 − P(Aᶜ)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">P(at least one 6) = 1 − P(no 6s)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate P(no 6s):</strong> P(no 6 on one die) = 5/6<br>P(no 6s in 3 rolls) = (5/6)³ = 125/216
+              </div>
+              <div class="formula-substitution">
+                <strong>Substitute:</strong> P(at least one) = 1 − 125/216
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 216/216 − 125/216 = <strong>91/216</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card teal">
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
           <div class="label">Multiplication Rule</div>
           <div class="formula">P(A∩B) = P(A)·P(B|A)</div>
           <div class="desc">For dependent events. If independent: P(A∩B) = P(A)·P(B). "AND" = multiply.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Draw 2 cards without replacement. What's P(both are aces)?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">P(A∩B) = P(A)·P(B|A)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">P(both aces) = P(1st ace) · P(2nd ace | 1st ace)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Step 1:</strong> P(1st ace) = 4/52 = 1/13
+              </div>
+              <div class="formula-substitution">
+                <strong>Step 2:</strong> P(2nd ace | 1st was ace) = 3/51 = 1/17
+              </div>
+              <div class="formula-substitution">
+                <strong>Substitute:</strong> P(both aces) = (1/13) · (1/17)
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = <strong>1/221</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
           <div class="label">Addition Rule</div>
           <div class="formula">P(A∪B) = P(A)+P(B)−P(A∩B)</div>
           <div class="desc">For any two events. If mutually exclusive (no overlap): just P(A) + P(B). "OR" = add, then subtract overlap.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Roll a die. What's P(prime OR even)?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">P(A∪B) = P(A) + P(B) − P(A∩B)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">P(prime ∪ even) = P(prime) + P(even) − P(prime ∩ even)</div>
+                <div class="formula-substituted">= 3/6 + 3/6 − 1/6</div>
+                <div class="formula-note">Primes: {2, 3, 5} | Even: {2, 4, 6} | Both: {2}</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = <strong>5/6</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card red">
+        <div class="formula-card red" onclick="toggleFormulaExample(this)">
           <div class="label">Expected Value</div>
           <div class="formula">E = Σ xᵢ · P(xᵢ)</div>
           <div class="desc">Weighted average of all outcomes. Multiply each outcome by its probability and sum them up. Common in games/dice problems.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> A game pays $10 for rolling 6, $5 for rolling 3–5, $0 otherwise. What's the expected value?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">E = Σ xᵢ · P(xᵢ)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">E = $10·(1/6) + $5·(3/6) + $0·(2/6)</div>
+                <div class="formula-note">Roll 6: $10, P=1/6 | Roll 3–5: $5, P=3/6 | Roll 1–2: $0, P=2/6</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 10/6 + 15/6 + 0 = 25/6 = <strong>$4.17</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card blue">
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
           <div class="label">Geometric Probability</div>
           <div class="formula">P = favourable area / total area</div>
           <div class="desc">When the sample space is a region. Set up a ratio of areas, lengths, or volumes. Watch for symmetry!</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> A point is chosen randomly in a 2×2 square. What's P(it's within 1 unit of a corner)?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">P = favourable area / total area</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">P = π / 4</div>
+                <div class="formula-note">Total: 2×2 = 4 | Favourable: 4 quarter-circles (r=1) = π</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> ≈ <strong>0.785</strong>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1230,20 +593,67 @@
     <div class="section-block">
       <div class="section-label">The Core Idea</div>
       <div class="formula-grid">
-        <div class="formula-card teal">
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
           <div class="label">Complementary Counting</div>
           <div class="formula">Desired = Total − Unwanted</div>
           <div class="desc">Count everything, then subtract what you <em>don't</em> want. Use when the restriction is complex but the opposite is simple.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> How many 4-digit numbers have at least one 7?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Desired = Total − Unwanted</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">Numbers with at least one 7 = Total − Numbers with NO 7</div>
+                <div class="formula-substituted">= 9,000 − 5,832</div>
+                <div class="formula-note">Total: 9×10×10×10 = 9,000 | Unwanted: 8×9×9×9 = 5,832</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = <strong>3,168</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
           <div class="label">Inclusion-Exclusion (PIE)</div>
           <div class="formula">|A∪B| = |A|+|B|−|A∩B|</div>
           <div class="desc">For 3 sets: |A∪B∪C| = |A|+|B|+|C| − |A∩B| − |A∩C| − |B∩C| + |A∩B∩C|</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> How many integers 1–100 are divisible by 3 or 5?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">|A∪B| = |A| + |B| − |A∩B|</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">|divisible by 3 or 5| = |divisible by 3| + |divisible by 5| − |divisible by 15|</div>
+                <div class="formula-substituted">= 33 + 20 − 6</div>
+                <div class="formula-note">|A| = ⌊100/3⌋ = 33 | |B| = ⌊100/5⌋ = 20 | |A∩B| = ⌊100/15⌋ = 6</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = <strong>47</strong>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="formula-card blue">
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
           <div class="label">Derangements (Complement)</div>
           <div class="formula">D(n) = n! − (arrangements with ≥1 fixed)</div>
           <div class="desc">Use PIE to subtract arrangements where at least one item is in its original position. Shortcut: D(n) ≈ round(n!/e)</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> 5 people each get a wrong hat. How many ways?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">D(n) = n! − (arrangements with ≥1 fixed)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">D(5) = 5! − C(5,1)·4! + C(5,2)·3! − C(5,3)·2! + C(5,4)·1! − C(5,5)·0!</div>
+                <div class="formula-note">Using PIE: Total − (at least 1 correct)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 120 − 5·24 + 10·6 − 10·2 + 5·1 − 1·1<br>= 120 − 120 + 60 − 20 + 5 − 1 = <strong>44 ways</strong>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1380,61 +790,293 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
-       TAB 5 · PRACTICE
+       TAB 4 · NUMBER THEORY
   ═══════════════════════════════════════════ -->
-  <section class="panel" id="tab-practice">
+  <section class="panel" id="tab-number">
 
-    <!-- Progress bar -->
-    <div class="prac-header">
-      <div class="prac-meta">
-        <span class="prac-counter" id="prac-counter">Problem 1 of 12</span>
-        <span class="prac-score" id="prac-score">Score: 0</span>
+    <div class="section-block">
+      <div class="section-label">Core Formulas</div>
+      <div class="formula-grid">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">GCD (Greatest Common Divisor)</div>
+          <div class="formula">gcd(a,b) = gcd(b, a mod b)</div>
+          <div class="desc">Use Euclidean algorithm. For prime factorization: take minimum exponents. <em>gcd(12,18) = gcd(2²·3, 2·3²) = 2·3 = 6</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Find gcd(48, 180)</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">gcd(a,b) = gcd(b, a mod b)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">gcd(48, 180) = gcd(180, 48)</div>
+                <div class="formula-substituted">= gcd(48, 180 mod 48) = gcd(48, 36)</div>
+                <div class="formula-substituted">= gcd(36, 48 mod 36) = gcd(36, 12)</div>
+                <div class="formula-substituted">= gcd(12, 36 mod 12) = gcd(12, 0) = 12</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Or by prime factorization:</strong> 48 = 2⁴·3, 180 = 2²·3²·5<br>Take minimum exponents: 2²·3¹ = <strong>12</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
+          <div class="label">LCM (Least Common Multiple)</div>
+          <div class="formula">lcm(a,b) = a·b / gcd(a,b)</div>
+          <div class="desc">For prime factorization: take maximum exponents. Always: gcd(a,b) · lcm(a,b) = a·b</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Find lcm(12, 18)</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">lcm(a,b) = a·b / gcd(a,b)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">lcm(12, 18) = 12·18 / gcd(12, 18)</div>
+                <div class="formula-substituted">= 216 / 6</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = <strong>36</strong><br><br><strong>Or by prime factorization:</strong> 12 = 2²·3, 18 = 2·3²<br>Take maximum exponents: 2²·3² = <strong>36</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
+          <div class="label">Number of Divisors</div>
+          <div class="formula">d(n) = (e₁+1)(e₂+1)…(eₖ+1)</div>
+          <div class="desc">If n = p₁ᵉ¹·p₂ᵉ²·…·pₖᵉᵏ, then d(n) counts all divisors. <em>d(12) = d(2²·3¹) = (2+1)(1+1) = 6</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> How many positive divisors does 360 have?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">d(n) = (e₁+1)(e₂+1)…(eₖ+1)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">360 = 2³·3²·5¹</div>
+                <div class="formula-substituted">d(360) = (3+1)(2+1)(1+1)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 4·3·2 = <strong>24 divisors</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card red" onclick="toggleFormulaExample(this)">
+          <div class="label">Sum of Divisors</div>
+          <div class="formula">σ(n) = (p₁ᵉ¹⁺¹−1)/(p₁−1) · (p₂ᵉ²⁺¹−1)/(p₂−1) · …</div>
+          <div class="desc">Sum of all positive divisors. For prime p: σ(pᵉ) = (pᵉ⁺¹−1)/(p−1). <em>σ(12) = σ(2²·3¹) = (2³−1)/(2−1) · (3²−1)/(3−1) = 7·4 = 28</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Find the sum of all positive divisors of 18</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">σ(n) = (p₁ᵉ¹⁺¹−1)/(p₁−1) · (p₂ᵉ²⁺¹−1)/(p₂−1)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">18 = 2¹·3²</div>
+                <div class="formula-substituted">σ(18) = (2²−1)/(2−1) · (3³−1)/(3−1)</div>
+                <div class="formula-substituted">= 3/1 · 26/2 = 3 · 13</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = <strong>39</strong><br><br><strong>Verify:</strong> Divisors: 1, 2, 3, 6, 9, 18 → Sum = 39 ✓
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
+          <div class="label">Modular Arithmetic</div>
+          <div class="formula">(a+b) mod m = ((a mod m) + (b mod m)) mod m</div>
+          <div class="desc">Same for subtraction and multiplication. Division requires modular inverse. <em>Useful for finding remainders of large numbers.</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> What is 1234 + 5678 mod 7?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">(a+b) mod m = ((a mod m) + (b mod m)) mod m</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">(1234 + 5678) mod 7 = ((1234 mod 7) + (5678 mod 7)) mod 7</div>
+                <div class="formula-substituted">= (2 + 1) mod 7</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> 1234 ÷ 7 = 176 R2, 5678 ÷ 7 = 811 R1<br>(2 + 1) mod 7 = <strong>3</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Fermat's Little Theorem</div>
+          <div class="formula">If p is prime, aᵖ⁻¹ ≡ 1 (mod p)</div>
+          <div class="desc">For gcd(a,p) = 1. Useful for finding large powers mod p. <em>2⁶ mod 7 = 2⁷⁻¹ mod 7 = 1 mod 7</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Find 3¹⁰⁰ mod 7</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">aᵖ⁻¹ ≡ 1 (mod p) if p is prime</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">3⁶ ≡ 1 (mod 7) since 7 is prime</div>
+                <div class="formula-substituted">3¹⁰⁰ = 3⁶·¹⁶ + ⁴ = (3⁶)¹⁶ · 3⁴</div>
+                <div class="formula-substituted">≡ 1¹⁶ · 3⁴ (mod 7) = 3⁴ (mod 7)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> 3⁴ = 81 ≡ 4 (mod 7)<br>Answer: <strong>4</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
+          <div class="label">Euler's Totient Function</div>
+          <div class="formula">φ(n) = n · Π(1 − 1/pᵢ)</div>
+          <div class="desc">Counts integers ≤ n coprime to n. For prime p: φ(p) = p−1. For pᵉ: φ(pᵉ) = pᵉ − pᵉ⁻¹</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Find φ(12)</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">φ(n) = n · Π(1 − 1/pᵢ)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">12 = 2²·3¹</div>
+                <div class="formula-substituted">φ(12) = 12 · (1−1/2) · (1−1/3)</div>
+                <div class="formula-substituted">= 12 · 1/2 · 2/3</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 12 · 1/3 = <strong>4</strong><br><br><strong>Verify:</strong> Coprime to 12: {1, 5, 7, 11} → 4 numbers ✓
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Chinese Remainder Theorem</div>
+          <div class="formula">x ≡ a (mod m), x ≡ b (mod n)</div>
+          <div class="desc">If gcd(m,n) = 1, solution exists mod (m·n). Find x₁, x₂ such that m·x₁ + n·x₂ = 1, then x = a·n·x₂ + b·m·x₁</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Find x such that x ≡ 2 (mod 3) and x ≡ 3 (mod 5)</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">x ≡ a (mod m), x ≡ b (mod n)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">x ≡ 2 (mod 3), x ≡ 3 (mod 5)</div>
+                <div class="formula-substituted">Try x = 3k + 2, need 3k + 2 ≡ 3 (mod 5)</div>
+                <div class="formula-substituted">3k ≡ 1 (mod 5) → k ≡ 2 (mod 5)</div>
+                <div class="formula-substituted">k = 5m + 2, so x = 3(5m+2) + 2 = 15m + 8</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> x ≡ <strong>8 (mod 15)</strong><br>Verify: 8 mod 3 = 2 ✓, 8 mod 5 = 3 ✓
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="prac-progress-track">
-        <div class="prac-progress-fill" id="prac-progress" style="width:0%"></div>
-      </div>
-      <div class="prac-dots" id="prac-dots"></div>
     </div>
 
-    <!-- Problem card -->
-    <div class="prac-card" id="prac-card">
-      <div class="prac-topic" id="prac-topic">Combinations</div>
-      <div class="prac-question" id="prac-question">Loading...</div>
-
-      <!-- Phase 1: method MCQ -->
-      <div id="phase-method">
-        <div class="prac-prompt">Which method or formula should you use first?</div>
-        <div class="prac-choices" id="method-choices"></div>
-      </div>
-
-      <!-- Phase 2: answer MCQ -->
-      <div id="phase-answer" style="display:none;">
-        <div class="prac-feedback" id="method-feedback"></div>
-        <div class="prac-prompt" style="margin-top:20px;">Now — what's the answer?</div>
-        <div class="prac-choices" id="answer-choices"></div>
-      </div>
-
-      <!-- Phase 3: full solution -->
-      <div id="phase-solution" style="display:none;">
-        <div class="prac-feedback" id="answer-feedback"></div>
-        <div class="prac-solution-box" id="solution-box"></div>
-        <button class="prac-next-btn" id="next-btn" onclick="nextProblem()">Next Problem →</button>
+    <div class="section-block">
+      <div class="section-label">Divisibility Rules</div>
+      <div class="remember-grid">
+        <div class="remember-pill">
+          <span class="pill-icon">2</span>
+          <div class="pill-text">Divisible by <strong>2</strong>: Last digit is even (0, 2, 4, 6, 8)</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">3</span>
+          <div class="pill-text">Divisible by <strong>3</strong>: Sum of digits is divisible by 3</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">4</span>
+          <div class="pill-text">Divisible by <strong>4</strong>: Last 2 digits form a number divisible by 4</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">5</span>
+          <div class="pill-text">Divisible by <strong>5</strong>: Last digit is 0 or 5</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">6</span>
+          <div class="pill-text">Divisible by <strong>6</strong>: Divisible by both 2 and 3</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">7</span>
+          <div class="pill-text">Divisible by <strong>7</strong>: Double last digit, subtract from rest. Result divisible by 7?</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">8</span>
+          <div class="pill-text">Divisible by <strong>8</strong>: Last 3 digits form a number divisible by 8</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">9</span>
+          <div class="pill-text">Divisible by <strong>9</strong>: Sum of digits is divisible by 9</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">11</span>
+          <div class="pill-text">Divisible by <strong>11</strong>: Alternating sum of digits is divisible by 11</div>
+        </div>
       </div>
     </div>
 
-    <!-- Finished screen -->
-    <div class="prac-finished" id="prac-finished" style="display:none;">
-      <div class="finish-star">★</div>
-      <div class="finish-title">Set Complete!</div>
-      <div class="finish-score" id="finish-score"></div>
-      <div class="finish-msg" id="finish-msg"></div>
-      <button class="prac-next-btn" onclick="restartPractice()" style="margin-top:24px;">Restart Practice</button>
-    </div>
+    <div class="section-block">
+      <div class="section-label">Practice Problems</div>
 
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 01</span>
+          <span class="ex-q">Find the smallest positive integer that leaves remainder 2 when divided by 3, remainder 3 when divided by 5, and remainder 4 when divided by 7.</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution — Chinese Remainder Theorem</div>
+          <div class="sol-text">
+            We need x such that:<br>
+            x ≡ 2 (mod 3), x ≡ 3 (mod 5), x ≡ 4 (mod 7)<br><br>
+            Start with x ≡ 2 (mod 3) → x = 3k + 2<br>
+            Substitute into second: 3k + 2 ≡ 3 (mod 5) → 3k ≡ 1 (mod 5) → k ≡ 2 (mod 5)<br>
+            So k = 5m + 2, giving x = 3(5m + 2) + 2 = 15m + 8<br><br>
+            Now x = 15m + 8 ≡ 4 (mod 7)<br>
+            15m + 8 ≡ 4 (mod 7) → m + 1 ≡ 4 (mod 7) → m ≡ 3 (mod 7)<br>
+            So m = 7n + 3, giving x = 15(7n + 3) + 8 = 105n + 53<br><br>
+            Smallest positive: n = 0 → x = 53
+            <span class="ans">53</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 02</span>
+          <span class="ex-q">How many positive divisors does 360 have, and what is their sum?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            <strong>Prime factorization:</strong> 360 = 2³ · 3² · 5¹<br><br>
+            <strong>Number of divisors:</strong> d(360) = (3+1)(2+1)(1+1) = 4·3·2 = <strong>24 divisors</strong><br><br>
+            <strong>Sum of divisors:</strong> σ(360) = (2⁴−1)/(2−1) · (3³−1)/(3−1) · (5²−1)/(5−1)<br>
+            = 15/1 · 26/2 · 24/4 = 15 · 13 · 6 = <strong>1170</strong>
+            <span class="ans">24 divisors, sum = 1170</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 03</span>
+          <span class="ex-q">Find the last two digits of 7¹⁰⁰</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution — Modular Arithmetic</div>
+          <div class="sol-text">
+            We need 7¹⁰⁰ mod 100. Use Euler's theorem: φ(100) = φ(2²·5²) = 100·(1−1/2)(1−1/5) = 100·1/2·4/5 = 40<br><br>
+            Since gcd(7, 100) = 1, 7⁴⁰ ≡ 1 (mod 100)<br>
+            7¹⁰⁰ = 7⁴⁰·² + ²⁰ = (7⁴⁰)² · 7²⁰ ≡ 1² · 7²⁰ (mod 100)<br><br>
+            Calculate 7²⁰ mod 100: 7² = 49, 7⁴ = 49² = 2401 ≡ 1 (mod 100)<br>
+            So 7²⁰ = (7⁴)⁵ ≡ 1⁵ = 1 (mod 100)<br><br>
+            Answer: <strong>01</strong>
+            <span class="ans">01</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════
-       TAB 4 · QUICK REFERENCE
+       TAB 5 · QUICK REFERENCE
   ═══════════════════════════════════════════ -->
   <section class="panel" id="tab-ref">
 
@@ -1587,516 +1229,6 @@
 </main>
 </div>
 
-<script>
-  function showTab(id) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-' + id).classList.add('active');
-    event.target.classList.add('active');
-    if (id === 'practice' && !practiceInit) initPractice();
-  }
-
-  function toggleGotcha(card) { card.classList.toggle('open'); }
-  function toggleExample(card) { card.classList.toggle('open'); }
-
-  /* ════════════════════════════════════════
-     PRACTICE ENGINE
-  ════════════════════════════════════════ */
-
-  const PROBLEMS = [
-    {
-      topic: "Combinations",
-      question: "A student council has 12 members. How many ways can a 4-person committee be formed where the order of selection doesn't matter?",
-      methodChoices: [
-        { label: "Permutation — P(12, 4)", desc: "Use when the order of selection matters (e.g. assigning specific roles).", correct: false, icon: "❌" },
-        { label: "Combination — C(12, 4)", desc: "Use when selecting a group where order doesn't matter.", correct: true, icon: "✅" },
-        { label: "Stars & Bars", desc: "Use to distribute identical items into bins.", correct: false, icon: "❌" },
-        { label: "Circular Permutation", desc: "Use when arranging around a circle.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "Exactly right. Since there are no distinct roles (no president/VP), the committee is an unordered group — that's a combination.",
-        wrong: "Not quite. The problem says the committee has no defined roles and order of selection doesn't matter. That's the key signal for combinations."
-      },
-      answerChoices: [
-        { label: "C(12,4) = 495", correct: true },
-        { label: "C(12,4) = 11,880", correct: false },
-        { label: "C(12,4) = 220", correct: false },
-        { label: "C(12,4) = 3,991,680", correct: false },
-      ],
-      solution: `<strong>C(12, 4)</strong> = 12! / (4! × 8!) = (12 × 11 × 10 × 9) / (4 × 3 × 2 × 1) = 11,880 / 24`,
-      answer: "495"
-    },
-    {
-      topic: "Complementary Counting",
-      question: "How many 4-digit numbers (1000–9999) have at least one digit equal to 7?",
-      methodChoices: [
-        { label: "Direct casework — count each case (exactly 1, 2, 3, 4 sevens)", desc: "Add up results for each possible number of 7s.", correct: false, icon: "⚠️" },
-        { label: "Complementary — Total minus numbers with NO sevens", desc: "Count 4-digit numbers that avoid 7, then subtract.", correct: true, icon: "✅" },
-        { label: "PIE — Inclusion-Exclusion", desc: "Used when events share elements and you need to avoid double-counting.", correct: false, icon: "❌" },
-        { label: "Stars & Bars", desc: "Used to distribute identical objects into bins.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "Perfect instinct. 'At least one' is always a complementary counting signal. Counting the complement (no 7s) requires just one calculation instead of four cases.",
-        wrong: "The phrase 'at least one' almost always signals complementary counting. Direct casework here means summing 4 separate cases — much slower and error-prone."
-      },
-      answerChoices: [
-        { label: "2,457", correct: false },
-        { label: "3,168", correct: true },
-        { label: "4,005", correct: false },
-        { label: "2,916", correct: false },
-      ],
-      solution: `<strong>Total 4-digit numbers:</strong> 9000 (1000–9999)<br>
-<strong>No 7s at all:</strong> First digit has 8 choices (1–9 except 7), each remaining digit has 9 choices (0–9 except 7).<br>
-Count = 8 × 9 × 9 × 9 = 5,832<br>
-<strong>Answer:</strong> 9000 − 5832`,
-      answer: "3,168"
-    },
-    {
-      topic: "Circular Permutations",
-      question: "In how many ways can 7 people be seated around a circular table?",
-      methodChoices: [
-        { label: "7! = 5,040", desc: "Arrange 7 distinct people in a straight line.", correct: false, icon: "❌" },
-        { label: "(7−1)! = 6! = 720", desc: "Fix one person to eliminate rotational duplicates.", correct: true, icon: "✅" },
-        { label: "7!/2 = 2,520", desc: "Divide by 2 to remove mirror reflections (used for necklaces).", correct: false, icon: "❌" },
-        { label: "C(7,1) × 6! = 5,040", desc: "Choose who sits first, then arrange the rest.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "Correct! In circular arrangements, one seat is fixed to remove rotational duplicates. That leaves (n−1)! arrangements of the remaining people.",
-        wrong: "Remember: in a circle, rotations of the same arrangement are identical. Fix one person as a reference point, then count the (n−1)! ways to arrange the rest. 7!/2 is only for necklaces (where flipping also creates duplicates)."
-      },
-      answerChoices: [
-        { label: "5,040", correct: false },
-        { label: "720", correct: true },
-        { label: "2,520", correct: false },
-        { label: "840", correct: false },
-      ],
-      solution: `Fix one person in place to remove rotational equivalence. Arrange the remaining <strong>6 people</strong> in the remaining 6 seats.<br>
-(7−1)! = 6! = 6 × 5 × 4 × 3 × 2 × 1`,
-      answer: "720"
-    },
-    {
-      topic: "Stars & Bars",
-      question: "How many ways can 9 identical cookies be distributed among 3 children if each child must receive at least 2 cookies?",
-      methodChoices: [
-        { label: "C(9+3−1, 3−1) = C(11, 2)", desc: "Stars & Bars with no minimum restriction.", correct: false, icon: "❌" },
-        { label: "Give 2 to each child first, then Stars & Bars on the remaining.", desc: "Reduce to a simpler distribution by satisfying the minimum first.", correct: true, icon: "✅" },
-        { label: "Permutation of 9 items into 3 groups", desc: "Count ordered arrangements of cookies.", correct: false, icon: "❌" },
-        { label: "3⁹ ways to assign each cookie", desc: "Each cookie independently goes to one of 3 children.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "Great thinking! When each bin has a minimum, satisfy it first: give each child 2 cookies (uses 6), then distribute the remaining 3 freely with Stars & Bars.",
-        wrong: "When each bin requires a minimum, the trick is to pre-satisfy the minimum first. Give 2 to each child (using 6 cookies), then use Stars & Bars on the remaining 3."
-      },
-      answerChoices: [
-        { label: "C(11,2) = 55", correct: false },
-        { label: "C(5,2) = 10", correct: true },
-        { label: "C(9,2) = 36", correct: false },
-        { label: "C(6,2) = 15", correct: false },
-      ],
-      solution: `Give each of the 3 children 2 cookies upfront → 6 used, <strong>3 remaining</strong>.<br>
-Now distribute 3 identical cookies among 3 children with no restriction:<br>
-C(3 + 3 − 1, 3 − 1) = C(5, 2) = 10`,
-      answer: "C(5,2) = 10"
-    },
-    {
-      topic: "Probability — Complement",
-      question: "A fair coin is flipped 5 times. What is the probability of getting at least one tail?",
-      methodChoices: [
-        { label: "Casework — P(1 tail) + P(2 tails) + P(3 tails) + P(4 tails) + P(5 tails)", desc: "Sum probabilities for each case.", correct: false, icon: "⚠️" },
-        { label: "Complement — 1 − P(no tails at all)", desc: "'At least one' flips to 'none', which is a single clean calculation.", correct: true, icon: "✅" },
-        { label: "Multiplication rule — P(T) × P(T) × P(T) × P(T) × P(T)", desc: "Multiply probabilities for independent sequential events.", correct: false, icon: "❌" },
-        { label: "Addition rule — P(T) + P(T) + … for 5 flips", desc: "Add probabilities across independent events.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "Exactly! 'At least one tail' = 1 − P(all heads). P(all heads) = (1/2)⁵ = 1/32. Done in one step instead of summing 5 cases.",
-        wrong: "Whenever you see 'at least one', flip to the complement. P(at least one tail) = 1 − P(zero tails) = 1 − (1/2)⁵. Much faster than summing 5 cases."
-      },
-      answerChoices: [
-        { label: "1/32", correct: false },
-        { label: "31/32", correct: true },
-        { label: "15/16", correct: false },
-        { label: "5/32", correct: false },
-      ],
-      solution: `P(at least one tail) = 1 − P(no tails)<br>
-P(no tails) = P(all heads) = (1/2)⁵ = <strong>1/32</strong><br>
-P(at least one tail) = 1 − 1/32`,
-      answer: "31/32"
-    },
-    {
-      topic: "Permutations with Repetition",
-      question: "How many distinct arrangements are there of the letters in the word BOOKKEEPER?",
-      methodChoices: [
-        { label: "10! — all letters are distinct", desc: "Treat every letter as unique.", correct: false, icon: "❌" },
-        { label: "10! / (duplicates) — Multinomial formula", desc: "Divide by factorial of each repeated letter's count.", correct: true, icon: "✅" },
-        { label: "C(10, 2) × 8! — choose positions for repeats", desc: "Place repeated letters first, arrange the rest.", correct: false, icon: "❌" },
-        { label: "(10−1)! — circular arrangement", desc: "Fix one letter to eliminate rotation duplicates.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "Right. BOOKKEEPER has repeated letters (O×2, K×2, E×3), so we divide 10! by each frequency factorial to avoid overcounting.",
-        wrong: "When a word has repeated letters, we must divide by the factorial of each letter's frequency. BOOKKEEPER has B×1, O×2, K×2, E×3, P×1, R×1."
-      },
-      answerChoices: [
-        { label: "151,200", correct: true },
-        { label: "3,628,800", correct: false },
-        { label: "75,600", correct: false },
-        { label: "30,240", correct: false },
-      ],
-      solution: `BOOKKEEPER: B(1), O(2), K(2), E(3), P(1), R(1) → 10 letters total<br>
-Arrangements = <strong>10! / (1! × 2! × 2! × 3! × 1! × 1!)</strong><br>
-= 3,628,800 / (1 × 2 × 2 × 6 × 1 × 1)<br>
-= 3,628,800 / 24`,
-      answer: "151,200"
-    },
-    {
-      topic: "PIE — Inclusion-Exclusion",
-      question: "How many integers from 1 to 200 are divisible by 4 or by 6?",
-      methodChoices: [
-        { label: "Count divisible by 4 + count divisible by 6", desc: "Add both groups together.", correct: false, icon: "❌" },
-        { label: "PIE: |div by 4| + |div by 6| − |div by 12|", desc: "Subtract the overlap (divisible by LCM of 4 and 6 = 12).", correct: true, icon: "✅" },
-        { label: "Complementary: 200 − |not divisible by 4 or 6|", desc: "Subtract numbers that avoid both conditions.", correct: false, icon: "⚠️" },
-        { label: "Multiply both counts: 50 × 33", desc: "Combine by multiplication for independent events.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "Spot on — this is a textbook PIE problem. 'Divisible by A or B' means union, and union requires adding both sets then subtracting the overlap (LCM).",
-        wrong: "The keyword 'OR' signals a union, which means PIE. Simply adding gives a double-count of numbers divisible by both 4 and 6 (i.e., divisible by LCM = 12)."
-      },
-      answerChoices: [
-        { label: "83", correct: true },
-        { label: "66", correct: false },
-        { label: "117", correct: false },
-        { label: "50", correct: false },
-      ],
-      solution: `⌊200/4⌋ = <strong>50</strong> (divisible by 4)<br>
-⌊200/6⌋ = <strong>33</strong> (divisible by 6)<br>
-⌊200/12⌋ = <strong>16</strong> (divisible by both — LCM(4,6) = 12)<br>
-PIE: 50 + 33 − 16`,
-      answer: "83"
-    },
-    {
-      topic: "Dependent Probability",
-      question: "A jar has 6 red and 4 green marbles. Two are drawn without replacement. What is the probability the second marble is green, given the first was red?",
-      methodChoices: [
-        { label: "P(green) = 4/10 — independent of first draw", desc: "Treat each draw as if the jar resets.", correct: false, icon: "❌" },
-        { label: "Conditional probability — P(green | first red) = 4/9", desc: "The first draw changes what's left in the jar.", correct: true, icon: "✅" },
-        { label: "Combination ratio — C(4,1)/C(10,2)", desc: "Use combinations to count favorable vs total outcomes.", correct: false, icon: "❌" },
-        { label: "Complement — 1 − P(second is red | first was red)", desc: "Subtract the probability it's red from 1.", correct: false, icon: "⚠️" },
-      ],
-      methodFeedback: {
-        correct: "Correct. After one red is removed, the jar has 9 marbles left (6 red, 4 green). The denominator shrinks. This is conditional/dependent probability.",
-        wrong: "Without replacement means the first draw changes the jar. After removing a red marble: 9 marbles remain (6 red, 4 green). So the conditional probability is 4/9."
-      },
-      answerChoices: [
-        { label: "2/5", correct: false },
-        { label: "4/9", correct: true },
-        { label: "1/3", correct: false },
-        { label: "4/10", correct: false },
-      ],
-      solution: `After the first red marble is drawn, the jar has 9 marbles left: 6 red, <strong>4 green</strong>.<br>
-P(second is green | first was red) = 4/9<br>
-The denominator shrinks from 10 → 9 because we drew without replacement.`,
-      answer: "4/9"
-    },
-    {
-      topic: "Derangements",
-      question: "Four students each bring a gift. The gifts are randomly redistributed so each student gets one. What is the probability that no student receives their own gift?",
-      methodChoices: [
-        { label: "Complement — 1 minus probability at least one keeps their gift", desc: "Subtract from 1 the cases where someone gets their own.", correct: false, icon: "⚠️" },
-        { label: "Derangements — D(4)/4!", desc: "Count permutations where nothing is in its original position.", correct: true, icon: "✅" },
-        { label: "Combination — C(4,4)/4!", desc: "All ways to select 4 items from 4.", correct: false, icon: "❌" },
-        { label: "P(4,4) = 4! = 24 total, pick favorable by casework", desc: "Enumerate all 24 arrangements.", correct: false, icon: "⚠️" },
-      ],
-      methodFeedback: {
-        correct: "Exactly — this is the definition of a derangement: a permutation where no element is in its original position. D(4) = 9, and the probability is D(4)/4!.",
-        wrong: "When no item can return to its original position, that's a derangement. The count is D(n) and for n=4: D(4) = 9. The probability is D(4)/4! = 9/24 = 3/8."
-      },
-      answerChoices: [
-        { label: "1/4", correct: false },
-        { label: "3/8", correct: true },
-        { label: "5/8", correct: false },
-        { label: "1/3", correct: false },
-      ],
-      solution: `D(4) = 9 (memorize: D(1)=0, D(2)=1, D(3)=2, <strong>D(4)=9</strong>)<br>
-Total arrangements = 4! = 24<br>
-P(derangement) = D(4) / 4! = 9/24`,
-      answer: "3/8"
-    },
-    {
-      topic: "Glue Technique",
-      question: "8 people need to sit in a row. Two friends, Alex and Blake, must sit next to each other. How many arrangements are possible?",
-      methodChoices: [
-        { label: "8! minus cases where they aren't adjacent", desc: "Complementary approach.", correct: false, icon: "⚠️" },
-        { label: "Glue Alex & Blake together → treat as 7 items, then multiply by 2", desc: "Merge the pair into a single unit, count, then account for their internal order.", correct: true, icon: "✅" },
-        { label: "Choose 2 adjacent seats out of 8, then arrange the rest", desc: "Pick the position for the pair, then fill remaining seats.", correct: false, icon: "⚠️" },
-        { label: "C(8,2) × 6!", desc: "Choose seats for the pair, arrange the rest.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "The glue technique is perfect here. Merge Alex and Blake into one super-person. Now arrange 7 items in a row: 7! ways. But Alex and Blake can swap within the unit: × 2!.",
-        wrong: "When two people must be adjacent, the classic trick is to 'glue' them together. Treat them as a single unit, giving 7 items to arrange. Then multiply by 2! for their internal order."
-      },
-      answerChoices: [
-        { label: "7! = 5,040", correct: false },
-        { label: "7! × 2! = 10,080", correct: true },
-        { label: "8! / 2 = 20,160", correct: false },
-        { label: "6! × 2! = 1,440", correct: false },
-      ],
-      solution: `<strong>Glue</strong> Alex and Blake into one unit → 7 objects to arrange in a row.<br>
-Arrangements of 7 objects: 7! = 5,040<br>
-Internal arrangements of the pair: 2! = 2<br>
-Total: 7! × 2!`,
-      answer: "7! × 2! = 10,080"
-    },
-    {
-      topic: "Expected Value",
-      question: "A die is rolled. You win $3 if you roll a 5 or 6, lose $1 if you roll a 1 or 2, and win $0 otherwise. What is the expected value per roll?",
-      methodChoices: [
-        { label: "Average the three outcomes: ($3 − $1 + $0) / 3", desc: "Simple average of the three payout values.", correct: false, icon: "❌" },
-        { label: "E = Σ xᵢ · P(xᵢ) — weight each outcome by its probability", desc: "Multiply each outcome by its likelihood and sum.", correct: true, icon: "✅" },
-        { label: "Count favorable outcomes / total outcomes", desc: "Use basic probability for the best outcome.", correct: false, icon: "❌" },
-        { label: "Complement: 1 − P(loss) × payout", desc: "Subtract loss probability from 1.", correct: false, icon: "❌" },
-      ],
-      methodFeedback: {
-        correct: "Correct! Expected value always weights each outcome by its probability. Don't just average the payouts — the probabilities differ for each group.",
-        wrong: "Expected value is always E = Σ xᵢ × P(xᵢ). Averaging payouts ignores how likely each is. Each outcome must be weighted by its probability."
-      },
-      answerChoices: [
-        { label: "$0.67", correct: true },
-        { label: "$1.00", correct: false },
-        { label: "$0.50", correct: false },
-        { label: "$0.33", correct: false },
-      ],
-      solution: `P(roll 5 or 6) = 2/6 = 1/3 → payout: <strong>+$3</strong><br>
-P(roll 1 or 2) = 2/6 = 1/3 → payout: <strong>−$1</strong><br>
-P(roll 3 or 4) = 2/6 = 1/3 → payout: <strong>$0</strong><br><br>
-E = (3)(1/3) + (−1)(1/3) + (0)(1/3) = 1 − 1/3 + 0 = 2/3`,
-      answer: "≈ $0.67 (= 2/3)"
-    },
-    {
-      topic: "Combination vs. Permutation",
-      question: "A class of 20 students needs to elect a President, Vice President, and Treasurer. How many outcomes are possible?",
-      methodChoices: [
-        { label: "C(20, 3) = 1,140 — choose 3 from 20", desc: "Select 3 people without roles.", correct: false, icon: "❌" },
-        { label: "P(20, 3) = 20 × 19 × 18 — order matters (different roles)", desc: "Each position is distinct, so order of selection matters.", correct: true, icon: "✅" },
-        { label: "20³ — any student can hold any role with repeats", desc: "Allow the same student in multiple roles.", correct: false, icon: "❌" },
-        { label: "3! × C(20,3) — arrange 3 chosen students into roles", desc: "Choose 3, then assign roles.", correct: false, icon: "⚠️" },
-      ],
-      methodFeedback: {
-        correct: "Exactly. President, VP, and Treasurer are three distinct roles — swapping two people changes the outcome. That's the signal for permutation. Note: P(20,3) = 20×19×18 and 3!×C(20,3) actually give the same answer — both approaches work!",
-        wrong: "The key signal: the three positions are distinct (President ≠ VP). Swapping two students changes the result, so order matters → Permutation. P(20,3) = 20 × 19 × 18."
-      },
-      answerChoices: [
-        { label: "1,140", correct: false },
-        { label: "6,840", correct: true },
-        { label: "8,000", correct: false },
-        { label: "3,420", correct: false },
-      ],
-      solution: `Three <strong>distinct</strong> roles → order matters → Permutation.<br>
-P(20, 3) = 20! / (20−3)! = 20 × 19 × 18`,
-      answer: "6,840"
-    },
-  ];
-
-  let practiceInit = false;
-  let currentIdx = 0;
-  let score = 0;
-  let dotResults = [];
-  let phase = 'method'; // 'method' | 'answer' | 'done'
-
-  function initPractice() {
-    practiceInit = true;
-    currentIdx = 0;
-    score = 0;
-    dotResults = new Array(PROBLEMS.length).fill('pending');
-    buildDots();
-    loadProblem(0);
-  }
-
-  function buildDots() {
-    const container = document.getElementById('prac-dots');
-    container.innerHTML = '';
-    PROBLEMS.forEach((_, i) => {
-      const dot = document.createElement('div');
-      dot.className = 'prac-dot' + (i === 0 ? ' current' : '');
-      dot.id = 'dot-' + i;
-      container.appendChild(dot);
-    });
-  }
-
-  function loadProblem(idx) {
-    phase = 'method';
-    const p = PROBLEMS[idx];
-
-    // Reset card glow
-    const card = document.getElementById('prac-card');
-    card.classList.remove('correct-glow', 'wrong-glow');
-
-    // Header
-    document.getElementById('prac-counter').textContent = `Problem ${idx + 1} of ${PROBLEMS.length}`;
-    document.getElementById('prac-score').textContent = `Score: ${score}`;
-    document.getElementById('prac-progress').style.width = `${(idx / PROBLEMS.length) * 100}%`;
-
-    // Content
-    document.getElementById('prac-topic').textContent = p.topic;
-    document.getElementById('prac-question').textContent = p.question;
-
-    // Show phase 1
-    document.getElementById('phase-method').style.display = 'block';
-    document.getElementById('phase-answer').style.display = 'none';
-    document.getElementById('phase-solution').style.display = 'none';
-
-    // Build method choices
-    const mc = document.getElementById('method-choices');
-    mc.innerHTML = '';
-    const keys = ['A', 'B', 'C', 'D'];
-    p.methodChoices.forEach((choice, i) => {
-      const el = document.createElement('div');
-      el.className = 'prac-choice';
-      el.innerHTML = `
-        <div class="choice-key">${keys[i]}</div>
-        <div class="choice-body">
-          <div class="choice-label">${choice.label}</div>
-          <div class="choice-desc">${choice.desc}</div>
-        </div>
-      `;
-      el.onclick = () => selectMethod(el, choice.correct, i, idx);
-      mc.appendChild(el);
-    });
-
-    // Update dots
-    dotResults.forEach((res, i) => {
-      const dot = document.getElementById('dot-' + i);
-      dot.className = 'prac-dot';
-      if (res === 'correct') dot.classList.add('correct');
-      else if (res === 'wrong') dot.classList.add('wrong');
-      if (i === idx) dot.classList.add('current');
-    });
-  }
-
-  function selectMethod(el, isCorrect, choiceIdx, probIdx) {
-    // Lock all choices
-    const allChoices = document.querySelectorAll('#method-choices .prac-choice');
-    allChoices.forEach(c => c.classList.add('locked'));
-
-    const p = PROBLEMS[probIdx];
-
-    if (isCorrect) {
-      el.classList.add('selected-correct');
-    } else {
-      el.classList.add('selected-wrong');
-      // Reveal correct
-      allChoices.forEach((c, i) => {
-        if (p.methodChoices[i].correct) c.classList.add('reveal-correct');
-      });
-    }
-
-    // Show feedback + answer phase
-    const fb = document.getElementById('method-feedback');
-    fb.className = 'prac-feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
-    fb.innerHTML = `<div class="fb-header">${isCorrect ? '✓ Correct Method' : '✗ Not Quite'}</div>${p.methodFeedback[isCorrect ? 'correct' : 'wrong']}`;
-
-    document.getElementById('phase-answer').style.display = 'block';
-
-    // Build answer choices
-    const ac = document.getElementById('answer-choices');
-    ac.innerHTML = '';
-    const keys = ['A', 'B', 'C', 'D'];
-    const shuffled = [...p.answerChoices].sort(() => Math.random() - 0.5);
-    shuffled.forEach((choice, i) => {
-      const el2 = document.createElement('div');
-      el2.className = 'prac-choice';
-      el2.innerHTML = `
-        <div class="choice-key">${keys[i]}</div>
-        <div class="choice-body">
-          <div class="choice-label">${choice.label}</div>
-        </div>
-      `;
-      el2.onclick = () => selectAnswer(el2, choice.correct, i, probIdx, shuffled, isCorrect);
-      ac.appendChild(el2);
-    });
-
-    phase = 'answer';
-  }
-
-  function selectAnswer(el, isCorrect, choiceIdx, probIdx, shuffled, methodCorrect) {
-    const allChoices = document.querySelectorAll('#answer-choices .prac-choice');
-    allChoices.forEach(c => c.classList.add('locked'));
-
-    const p = PROBLEMS[probIdx];
-    const card = document.getElementById('prac-card');
-    const bothCorrect = methodCorrect && isCorrect;
-
-    if (isCorrect) {
-      el.classList.add('selected-correct');
-      card.classList.add('correct-glow');
-    } else {
-      el.classList.add('selected-wrong');
-      card.classList.add('wrong-glow');
-      allChoices.forEach((c, i) => {
-        if (shuffled[i].correct) c.classList.add('reveal-correct');
-      });
-    }
-
-    // Score: +2 for both right, +1 for right answer with wrong method, 0 otherwise
-    if (bothCorrect) score += 2;
-    else if (isCorrect) score += 1;
-
-    // Update dot
-    dotResults[probIdx] = bothCorrect ? 'correct' : (isCorrect ? 'correct' : 'wrong');
-    const dot = document.getElementById('dot-' + probIdx);
-    dot.classList.remove('current');
-    dot.classList.add(dotResults[probIdx]);
-
-    // Show answer feedback + solution
-    const afb = document.getElementById('answer-feedback');
-    afb.className = 'prac-feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
-    afb.innerHTML = `<div class="fb-header">${isCorrect ? '✓ Correct Answer' : '✗ Incorrect'}</div>${isCorrect ? 'Well done! Check the full solution below.' : `The correct answer is <strong>${p.answer}</strong>. Review the solution below.`}`;
-
-    // Solution
-    const solBox = document.getElementById('solution-box');
-    solBox.innerHTML = `<div class="sol-step-label">Full Solution</div><div class="sol-steps">${p.solution}<br><span class="sol-answer-pill">Answer: ${p.answer}</span></div>`;
-
-    document.getElementById('phase-solution').style.display = 'block';
-
-    const nextBtn = document.getElementById('next-btn');
-    const isLast = probIdx === PROBLEMS.length - 1;
-    nextBtn.textContent = isLast ? 'See Results →' : 'Next Problem →';
-    document.getElementById('prac-score').textContent = `Score: ${score}`;
-
-    phase = 'done';
-  }
-
-  function nextProblem() {
-    if (currentIdx === PROBLEMS.length - 1) {
-      showFinished();
-      return;
-    }
-    currentIdx++;
-    loadProblem(currentIdx);
-    document.getElementById('prac-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function showFinished() {
-    document.getElementById('prac-card').style.display = 'none';
-    document.getElementById('prac-finished').style.display = 'block';
-    document.getElementById('prac-progress').style.width = '100%';
-
-    const maxScore = PROBLEMS.length * 2;
-    const pct = Math.round((score / maxScore) * 100);
-    document.getElementById('finish-score').textContent = `${score} / ${maxScore} points (${pct}%)`;
-
-    let msg = '';
-    if (pct >= 90) msg = "Outstanding! You're state-ready. Your method identification is sharp and your calculations are clean.";
-    else if (pct >= 70) msg = "Solid performance! Review the problems you missed — pay attention to the method signals and gotchas.";
-    else if (pct >= 50) msg = "Good effort. Focus on the Quick Ref tab to reinforce when each method applies, then try again.";
-    else msg = "Keep practicing! Review the formula cards and gotchas in each tab, then come back and try again.";
-
-    document.getElementById('finish-msg').textContent = msg;
-  }
-
-  function restartPractice() {
-    document.getElementById('prac-card').style.display = 'block';
-    document.getElementById('prac-finished').style.display = 'none';
-    initPractice();
-  }
-</script>
+<script src="main.js"></script>
 </body>
 </html>
