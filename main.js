@@ -5,8 +5,10 @@
 function showTab(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
+  const panel = document.getElementById('tab-' + id);
+  if (panel) panel.classList.add('active');
+  const tab = document.querySelector('.tab[data-tab="' + id + '"]');
+  if (tab) tab.classList.add('active');
 }
 
 /**

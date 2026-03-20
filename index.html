@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATHCOUNTS · Counting & Probability · State Prep</title>
+<title>MATHCOUNTS · C&amp;P · NT · Geometry · Rates · State Prep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -15,18 +15,21 @@
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">
     <span class="theme-icon">🌙</span>
   </button>
-  <div class="badge">State Level · Counting &amp; Probability · Number Theory</div>
+  <div class="badge">State Level · C&amp;P · NT · Geometry · Rates &amp; Percents</div>
   <h1>MATHCOUNTS<br><span>Cheat Sheet</span></h1>
-  <p class="subtitle">Permutations &amp; Combinations · Probability · Complementary Counting · Number Theory</p>
+  <p class="subtitle">P &amp; C · Probability · Complementary · Number Theory · Geometry · Rates, Ratios &amp; Percents</p>
   <div class="divider"></div>
 </header>
 
 <nav class="tab-bar">
-  <div class="tab active" onclick="showTab('perm')">P &amp; C</div>
-  <div class="tab" onclick="showTab('prob')">Probability</div>
-  <div class="tab" onclick="showTab('comp')">Complementary</div>
-  <div class="tab" onclick="showTab('number')">Number Theory</div>
-  <div class="tab" onclick="showTab('ref')">Quick Ref</div>
+  <div class="tab active" data-tab="perm" onclick="showTab('perm')">P &amp; C</div>
+  <div class="tab" data-tab="prob" onclick="showTab('prob')">Probability</div>
+  <div class="tab" data-tab="comp" onclick="showTab('comp')">Complementary</div>
+  <div class="tab" data-tab="number" onclick="showTab('number')">Number Theory</div>
+  <div class="tab" data-tab="geom" onclick="showTab('geom')">Geometry</div>
+  <div class="tab" data-tab="rates" onclick="showTab('rates')">Rates &amp; %</div>
+  <div class="tab" data-tab="ref" onclick="showTab('ref')">Quick Ref</div>
+  <div class="tab" data-tab="rapid" onclick="showTab('rapid')">Rapid Fire</div>
 </nav>
 
 <main class="content">
@@ -1076,7 +1079,683 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
-       TAB 5 · QUICK REFERENCE
+       TAB 5 · GEOMETRY
+  ═══════════════════════════════════════════ -->
+  <section class="panel" id="tab-geom">
+
+    <div class="section-block">
+      <div class="section-label">Lines, Angles &amp; Triangles</div>
+      <div class="formula-grid">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Parallel Lines &amp; Transversals</div>
+          <div class="formula">Alternate interior ∠s equal; same-side interior supplementary</div>
+          <div class="desc">When two parallel lines are cut by a transversal, use corresponding angles, alternate interior, and vertical angles to chase unknown measures.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Two parallel lines meet a transversal. One acute angle is 38°. What is the obtuse angle on the same side of the transversal?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Same-side interior angles are supplementary (sum to 180°)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">180° − 38° = 142°</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>142°</strong> (obtuse angle on that side of the transversal)
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
+          <div class="label">Triangle Angle Sum &amp; Exterior Angle</div>
+          <div class="formula">∠A + ∠B + ∠C = 180° · Ext. ∠ = sum of remote int. ∠s</div>
+          <div class="desc">An exterior angle of a triangle equals the sum of the two non-adjacent interior angles. Triangle inequality: any side &lt; sum of the other two.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> In △ABC, exterior angle at C is 110° and ∠A = 40°. Find ∠B.</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Ext. ∠ = ∠A + ∠B (remote interiors)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">110° = 40° + ∠B → ∠B = 70°</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>70°</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
+          <div class="label">Congruence &amp; Similarity</div>
+          <div class="formula">Congruent: SSS, SAS, ASA, AAS · Similar: AA (+ proportional sides)</div>
+          <div class="desc">Similar figures have equal corresponding angles; corresponding sides are in the same ratio k (scale factor).</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Two similar triangles have side ratio 2 : 5 (small to large). If the small triangle’s area is 12, what is the large triangle’s area?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Area ratio = k² where k is the linear scale factor (large/small)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">k = 5/2 → Area_large = (5/2)² · 12 = (25/4)·12</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = 25 · 3 = <strong>75</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Right Triangles &amp; Circles</div>
+      <div class="formula-grid">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Pythagorean Theorem</div>
+          <div class="formula">a² + b² = c² (c hypotenuse)</div>
+          <div class="desc">Common triples: 3-4-5, 5-12-13, 8-15-17, 7-24-25 and any multiples. Converse: if a² + b² = c², the triangle is right.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> A right triangle has legs 9 and 12. Find the hypotenuse.</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">c² = 9² + 12² = 81 + 144 = 225</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">c = 15</div>
+                <div class="formula-note">(3-4-5 scaled by 3)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>15</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
+          <div class="label">Special Right Triangles</div>
+          <div class="formula">45°-45°-90: 1 : 1 : √2 · 30°-60°-90: 1 : √3 : 2</div>
+          <div class="desc">In 30-60-90, the side opposite 30° is half the hypotenuse; opposite 60° is (√3/2) times hypotenuse.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Hypotenuse of a 30-60-90 triangle is 10. Find the shorter leg.</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Shorter leg opposite 30° = half hypotenuse</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">10 / 2 = 5</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>5</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Circle Basics</div>
+          <div class="formula">C = 2πr = πd · A = πr²</div>
+          <div class="desc">Arc length = (θ/360°)·2πr (θ in degrees). Sector area = (θ/360°)·πr². Inscribed angle = ½ central angle subtending the same arc.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Radius 6, central angle 60°. Find arc length and sector area.</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Arc = (60/360)·2π(6) = (1/6)·12π</div>
+                <div class="formula-substituted">Sector = (60/360)·π(6)² = (1/6)·36π</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Arc:</strong> <strong>2π</strong> · <strong>Sector:</strong> <strong>6π</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
+          <div class="label">Tangent &amp; Secant (Power of a Point)</div>
+          <div class="formula">(Tangent)² = (external part) × (whole secant)</div>
+          <div class="desc">Tangent ⊥ radius at the point of tangency. Two tangents from an external point are equal. Inscribed angle = ½ central angle on the same arc.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> From an external point, a tangent to the circle has length 8. A secant through the same point has external segment 4 and meets the circle again so the total secant length is 4 + x (internal part x). Find x.</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">8² = 4 · (4 + x)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">64 = 16 + 4x → 4x = 48</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> x = <strong>12</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Area &amp; Polygons</div>
+      <div class="formula-grid">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Triangle Area</div>
+          <div class="formula">A = ½bh = ½ab sin C · Heron: A = √(s(s−a)(s−b)(s−c))</div>
+          <div class="desc">s = semiperimeter = (a+b+c)/2. For a right triangle, A = ½(product of legs).</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Sides 5, 5, 6. Find area (isosceles).</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Altitude to base 6 splits into 3+3; height h: 3² + h² = 5² → h = 4</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">A = ½ · 6 · 4</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>12</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
+          <div class="label">Quadrilaterals</div>
+          <div class="formula">□ A = bh · ▱ A = bh · Trapezoid A = ½(h)(b₁+b₂)</div>
+          <div class="desc">Rhombus: A = ½d₁d₂ (diagonals). Kite: same. Parallelogram: opposite sides parallel and equal.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Trapezoid with height 5 and parallel bases 4 and 10. Find area.</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">A = ½(5)(4+10) = ½ · 5 · 14</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>35</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
+          <div class="label">Regular Polygons</div>
+          <div class="formula">Interior sum = (n−2)·180° · Ext. ∠ = 360°/n</div>
+          <div class="desc">Each interior angle of a regular n-gon: (n−2)·180°/n. Number of diagonals: n(n−3)/2.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> One exterior angle of a regular polygon is 18°. How many sides?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">n = 360° / (exterior angle)</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">n = 360/18 = 20</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>20</strong> sides
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Coordinate Geometry &amp; 3D</div>
+      <div class="formula-grid">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Distance &amp; Midpoint</div>
+          <div class="formula">d = √((x₂−x₁)²+(y₂−y₁)²) · M = ((x₁+x₂)/2, (y₁+y₂)/2)</div>
+          <div class="desc">Slope m = (y₂−y₁)/(x₂−x₁). Parallel lines: equal slopes. Perpendicular: slopes multiply to −1 (except vertical/horizontal).</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Distance from (1,2) to (4,6)?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">d² = 3² + 4² = 9 + 16 = 25</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">d = 5</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>5</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
+          <div class="label">Prism &amp; Cylinder</div>
+          <div class="formula">V_prism = B·h · V_cylinder = πr²h</div>
+          <div class="desc">B = base area. Lateral surface of cylinder = 2πrh; total = 2πrh + 2πr².</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Cylinder r = 3, h = 7. Volume?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">V = π(3)²(7) = 63π</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>63π</strong> cubic units
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
+          <div class="label">Pyramid, Cone &amp; Sphere</div>
+          <div class="formula">V_pyramid = ⅓Bh · V_cone = ⅓πr²h · V_sphere = ⁴⁄₃πr³</div>
+          <div class="desc">Surface area: sphere A = 4πr²; cone lateral = πrℓ (ℓ slant height). Frustum: use similar triangles or subtract cones.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Cone radius 4, height 3. Find volume.</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">V = ⅓π(4)²(3) = ⅓π·16·3 = 16π</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>16π</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card red" onclick="toggleFormulaExample(this)">
+          <div class="label">Similar Solids</div>
+          <div class="formula">Linear k · Area k² · Volume k³</div>
+          <div class="desc">If all lengths scale by a factor k, surface areas scale by k² and volumes by k³.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Two similar figures have lengths in ratio 2 : 3. What is the ratio of their volumes?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Volume ratio = k³ = (3/2)³ if comparing large to small</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">8 : 27 (small to large)</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>8 : 27</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">How to Approach Geometry Problems</div>
+      <div class="approach">
+        <h3>Geometry Problem Framework</h3>
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Draw a clean diagram</strong> and label knowns. Mark equal angles/sides from parallel lines, isosceles triangles, or congruent figures.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Identify the shape family:</strong> right triangle → Pythagorean or special triangles; circle → radii, arcs, inscribed angles; 3D → identify base and height.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Similarity:</strong> match corresponding vertices; set up proportional sides. Remember: area × k², volume × k³.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Coordinate problems:</strong> use distance, midpoint, slope; or place a convenient origin (e.g. vertex at (0,0)) to simplify algebra.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Sanity-check units:</strong> length vs area vs volume; angles in triangles must sum to 180°; probability-style “random point in region” uses area ratios.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Gotchas — Click to Expand</div>
+      <div class="gotcha-grid">
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Confusing Arc vs Full Circle</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Arc length and sector area use the <strong>fraction θ/360°</strong> (or θ/2π in radians). Don’t multiply by 2πr twice when you already used the fraction.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Similarity: Area vs Length</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">If sides double, <strong>area quadruples</strong> and <strong>volume octuples</strong>. A common error is using k instead of k² for area.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Which Leg in 30-60-90?</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">The side opposite <strong>30°</strong> is the shortest (half the hypotenuse). Opposite 60° is √3 times the shortest leg. Sketch the triangle to avoid mixing them up.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Inscribed vs Central Angle</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Inscribed angle = <strong>half</strong> the central angle for the same arc. An angle inscribed in a semicircle is 90°.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Pyramid vs Prism Volume</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Prism: <strong>V = Bh</strong>. Pyramid/Cone: <strong>V = ⅓Bh</strong>. Losing the ⅓ factor is a classic mistake.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Triangle Area: ½ ab sin C</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Use <strong>SAS</strong> (two sides and included angle) when you don’t have a convenient height. Don’t use sin of the wrong angle — it must be the <strong>included</strong> angle between the two sides.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Practice Problems</div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 01</span>
+          <span class="ex-q">In a circle of radius 5, chord AB has length 8. How far is the chord from the center of the circle?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Draw the perpendicular from the center to the chord; it bisects the chord into two segments of length 4.<br><br>
+            Right triangle: radius 5, leg 4, other leg d (distance from center to chord).<br>
+            4² + d² = 5² → 16 + d² = 25 → d² = 9
+            <span class="ans">3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 02</span>
+          <span class="ex-q">Two similar rectangular prisms have corresponding edge lengths in the ratio 2 : 5. What is the ratio of their volumes?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Volume scales with the <strong>cube</strong> of the linear ratio.<br><br>
+            (2³) : (5³) = 8 : 125
+            <span class="ans">8 : 125</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 03</span>
+          <span class="ex-q">Find the area of the triangle with vertices (0,0), (6,0), and (2,5).</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Base along the x-axis from (0,0) to (6,0) has length <strong>6</strong>. Height is the vertical distance from (2,5) to the x-axis, which is <strong>5</strong>.<br><br>
+            A = ½ · base · height = ½ · 6 · 5
+            <span class="ans">15</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TAB 6 · RATES, RATIOS, PERCENTS, MIXTURES, WORK
+  ═══════════════════════════════════════════ -->
+  <section class="panel" id="tab-rates">
+
+    <div class="section-block">
+      <div class="section-label">Core Formulas</div>
+      <div class="formula-grid">
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Distance, Rate &amp; Time</div>
+          <div class="formula">d = r · t · r = d/t · t = d/r</div>
+          <div class="desc">Same units: distance per time. <em>Meeting problems:</em> closing speed = sum of speeds (toward each other). <em>Chase:</em> relative speed = difference.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Two cars 210 mi apart drive toward each other at 45 mph and 60 mph. When do they meet?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Closing speed = 45 + 60 = 105 mph</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">t = d / r = 210 / 105</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> t = <strong>2 hours</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
+          <div class="label">Ratios &amp; Scaling</div>
+          <div class="formula">a : b = ka : kb · part / whole</div>
+          <div class="desc">Ratios stay equal when both parts multiply by the same factor. <em>Splitting:</em> ratio a:b → first gets a/(a+b) of the total.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Divide $120 in the ratio 2 : 3. How much is the larger share?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Total parts = 2 + 3 = 5</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">Larger share = (3/5) × 120</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> = <strong>$72</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card teal" onclick="toggleFormulaExample(this)">
+          <div class="label">Percents — Part &amp; Whole</div>
+          <div class="formula">part = (p/100) · whole · whole = part / (p/100)</div>
+          <div class="desc">“What is p% of W?” → multiply. “p% of what is P?” → divide. <em>Percent means “per 100.”</em></div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> 15% of a number is 42. What is the number?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">0.15 × n = 42 → n = 42 / 0.15</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Calculate:</strong> n = <strong>280</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card red" onclick="toggleFormulaExample(this)">
+          <div class="label">Percent Change</div>
+          <div class="formula">change% = (new − old) / old × 100%</div>
+          <div class="desc"><strong>“Of” is always the original (base).</strong> A 25% increase then 20% decrease: multiply (1.25)(0.80), not add percents.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Price $80 increases 15%, then the new price decreases 10%. Final price?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">80 × 1.15 × 0.90</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">= 92 × 0.90 = 82.8</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>$82.80</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card" onclick="toggleFormulaExample(this)">
+          <div class="label">Mixtures (Weighted Average)</div>
+          <div class="formula">(m₁c₁ + m₂c₂) / (m₁ + m₂) = c_mix</div>
+          <div class="desc">m = amount (mass), c = concentration (fraction or %). Same idea: <em>average speed</em> = total distance ÷ total time (not average of speeds unless equal times).</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> Mix 20 L of 30% acid with 10 L of 60% acid. What % acid is the mixture?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">Acid = 20(0.30) + 10(0.60) = 6 + 6 = 12 L</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">Total = 30 L → 12/30 = 0.40</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>40%</strong> acid
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card blue" onclick="toggleFormulaExample(this)">
+          <div class="label">Work Rates</div>
+          <div class="formula">Rate = 1 / time · 1/T = 1/A + 1/B + …</div>
+          <div class="desc">Each worker’s <strong>rate</strong> is “job per hour.” Working together, <strong>add rates</strong>. <em>Opposite:</em> one fills, one drains → subtract rates.</div>
+          <div class="formula-example">
+            <div class="example-label">Example</div>
+            <div class="example-problem"><strong>Problem:</strong> A can finish a job in 6 h, B in 12 h. How long together?</div>
+            <div class="example-solution">
+              <div class="formula-display">
+                <div class="formula-general">1/T = 1/6 + 1/12 = 2/12 + 1/12 = 3/12</div>
+                <div class="formula-arrow">↓</div>
+                <div class="formula-substituted">1/T = 1/4 → T = 4</div>
+              </div>
+              <div class="formula-substitution">
+                <strong>Answer:</strong> <strong>4 hours</strong> together
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">How to Approach Problems</div>
+      <div class="approach blue">
+        <h3>Rates &amp; Word-Problem Framework</h3>
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Label units:</strong> Write distance, rate, time (or work, workers, hours). Make sure rates and times are compatible (mph → hours, not minutes).</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Ratios:</strong> Set equal fractions or use a proportion table. If a : b = a′ : b′, then a/b = a′/b′ (cross-multiply).</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Percents:</strong> Convert “p%” to p/100 or 0.0p before algebra. Identify what “of” refers to — that’s the base.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Mixtures:</strong> Track the amount of <em>pure</em> substance (acid, salt, alcohol): “amount × concentration” = contribution, then divide by total amount.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-text"><strong>Work:</strong> Use “1 job” as the whole. Add individual rates for cooperation; subtract if one process undoes the other.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Gotchas — Click to Expand</div>
+      <div class="gotcha-grid">
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Average Speed ≠ Average of Speeds</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">If you go 30 mph for 2 h and 60 mph for 1 h, average speed is <strong>total distance ÷ total time</strong> = (60+60)/3 = 40 mph, not (30+60)/2. Only average the speeds when the <strong>times</strong> are equal.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Percent Increase vs. “Percent Of”</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">“Increase by 20%” means multiply by 1.20. “20% of the <em>new</em> value” is different from “20% of the <em>original</em>.” Read the base of the percent carefully.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Work: Don’t Average Times</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Two people who take 6 h and 12 h alone do <strong>not</strong> take 9 h together. Add <strong>rates</strong>: 1/6 + 1/12 = 1/4 → 4 h together.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Mixture vs. Replacement</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body"><strong>Mixing</strong> two solutions: use weighted average. <strong>Replace</strong> some volume with water: the amount of solute changes — subtract the fraction removed, then add new liquid if needed.</div>
+        </div>
+        <div class="gotcha-card" onclick="toggleGotcha(this)">
+          <div class="gotcha-header">
+            <span class="gotcha-icon">⚠️</span>
+            <span class="gotcha-title">Same Units</span>
+            <span class="gotcha-toggle">+</span>
+          </div>
+          <div class="gotcha-body">Convert minutes to hours (or vice versa) before using d = rt. Mixing “miles per minute” with “hours” without converting is a common source of wrong answers by a factor of 60.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-label">Practice Problems</div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 01</span>
+          <span class="ex-q">A train travels 120 miles at 40 mph, then 90 miles at 60 mph. What is its average speed for the entire trip?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Time for first leg: 120/40 = <strong>3 h</strong>. Second leg: 90/60 = <strong>1.5 h</strong>.<br><br>
+            Total distance = 120 + 90 = <strong>210 mi</strong>. Total time = 3 + 1.5 = <strong>4.5 h</strong>.<br><br>
+            Average speed = 210 / 4.5 = 210 / (9/2) = 420/9
+            <span class="ans">140/3 mph (≈ 46.67 mph)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 02</span>
+          <span class="ex-q">How many liters of pure water must be added to 40 L of 25% saline to make a 10% saline solution?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Salt is fixed: 0.25 × 40 = <strong>10 L</strong> salt.<br><br>
+            Let x = liters of water added. New volume = (40 + x) L, still 10 L salt.<br>
+            10 / (40 + x) = 0.10 → 10 = 0.10(40 + x) → 100 = 40 + x
+            <span class="ans">60 L</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-card" onclick="toggleExample(this)">
+        <div class="example-question">
+          <span class="ex-num">EX 03</span>
+          <span class="ex-q">Pipe A fills a tank in 4 hours, pipe B drains it in 6 hours. When both are open, how long to fill the tank from empty?</span>
+          <span class="ex-arrow">▶</span>
+        </div>
+        <div class="example-solution">
+          <div class="sol-label">Solution</div>
+          <div class="sol-text">
+            Rate of A: +1/4 tank per hour. Rate of B: −1/6 tank per hour.<br><br>
+            <strong>Net rate:</strong> 1/4 − 1/6 = 3/12 − 2/12 = <strong>1/12</strong> tank per hour.<br><br>
+            Time to fill 1 tank: T = 1 / (1/12)
+            <span class="ans">12 hours</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TAB 7 · QUICK REFERENCE
   ═══════════════════════════════════════════ -->
   <section class="panel" id="tab-ref">
 
@@ -1165,6 +1844,66 @@
               <td class="mono">D(n) ≈ n!/e</td>
               <td>D(1)=0, D(2)=1, D(3)=2, D(4)=9, D(5)=44</td>
             </tr>
+            <tr>
+              <td>Right triangle, distance, a² + b² = c²</td>
+              <td><span class="tag tag-gold">Pythagorean</span></td>
+              <td class="mono">a² + b² = c²</td>
+              <td>Watch 30-60-90 and 45-45-90 shortcuts; triples.</td>
+            </tr>
+            <tr>
+              <td>Similar figures, scale factor k</td>
+              <td><span class="tag tag-teal">Similarity</span></td>
+              <td class="mono">Area k² · Vol k³</td>
+              <td>Match corresponding vertices and sides.</td>
+            </tr>
+            <tr>
+              <td>Circle arc, sector, inscribed angle</td>
+              <td><span class="tag tag-gold">Circle</span></td>
+              <td class="mono">Arc = θ/360·2πr</td>
+              <td>Inscribed = ½ central on same arc.</td>
+            </tr>
+            <tr>
+              <td>Prism / pyramid / cone / sphere volume</td>
+              <td><span class="tag tag-blue">3D Volume</span></td>
+              <td class="mono">Prism Bh · Pyr ⅓Bh</td>
+              <td>Cone/sphere: don’t drop ⅓ or ⁴⁄₃.</td>
+            </tr>
+            <tr>
+              <td>Two points, slope, perpendicular lines</td>
+              <td><span class="tag tag-teal">Coordinate</span></td>
+              <td class="mono">d = √Δx²+Δy²</td>
+              <td>⊥ slopes multiply to −1 (when defined).</td>
+            </tr>
+            <tr>
+              <td>Speed, distance, time; meeting or chase</td>
+              <td><span class="tag tag-gold">d = rt</span></td>
+              <td class="mono">t = d/r · closing = r₁+r₂</td>
+              <td>Same units; avg speed = total d ÷ total t.</td>
+            </tr>
+            <tr>
+              <td>Split total in ratio a : b; proportions</td>
+              <td><span class="tag tag-blue">Ratio</span></td>
+              <td class="mono">a/(a+b) of total</td>
+              <td>Cross-multiply equivalent fractions.</td>
+            </tr>
+            <tr>
+              <td>p% of what; percent increase/decrease</td>
+              <td><span class="tag tag-teal">Percent</span></td>
+              <td class="mono">part = (p/100)·W</td>
+              <td>Base of “% of” is the old value for change.</td>
+            </tr>
+            <tr>
+              <td>Mixing solutions; weighted concentration</td>
+              <td><span class="tag tag-gold">Mixture</span></td>
+              <td class="mono">Σ(m·c) / Σm</td>
+              <td>Track pure solute; check total volume.</td>
+            </tr>
+            <tr>
+              <td>Workers, pipes; job in A hours, B hours…</td>
+              <td><span class="tag tag-blue">Work</span></td>
+              <td class="mono">1/T = Σ(1/tᵢ)</td>
+              <td>Drain = negative rate; add rates, not times.</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1221,6 +1960,42 @@
           <span class="pill-icon">⚡</span>
           <div class="pill-text">Geometric probability: <strong>reduce to 1D or 2D</strong> areas/lengths. Use symmetry whenever possible to simplify.</div>
         </div>
+        <div class="remember-pill">
+          <span class="pill-icon">⏱️</span>
+          <div class="pill-text">Average speed: <strong>total distance ÷ total time</strong>. Successive % changes: <strong>multiply</strong> the factors (1 ± p/100).</div>
+        </div>
+        <div class="remember-pill">
+          <span class="pill-icon">🔧</span>
+          <div class="pill-text">Work problems: add <strong>rates</strong> (1/time). Opposing fill/drain → net rate can be positive or negative.</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TAB 8 · RAPID FIRE (head-to-head style)
+  ═══════════════════════════════════════════ -->
+  <section class="panel" id="tab-rapid">
+
+    <div class="section-block">
+      <div class="section-label">Rapid Fire · Head-to-head pace</div>
+      <p class="rapid-intro">One problem at a time from any topic on this sheet. Difficulty is tuned like a buzzer round: challenging, but often crackable in about 5–30 seconds. Solve mentally if you can — then check the answer.</p>
+
+      <div class="rapid-fire-card">
+        <div class="rapid-meta">
+          <span class="rapid-topic" id="rapid-topic"></span>
+        </div>
+        <div class="rapid-question" id="rapid-question" role="status"></div>
+        <div class="rapid-actions">
+          <button type="button" class="rapid-btn rapid-btn-primary" id="rapid-see-answer" aria-expanded="false">See answer</button>
+          <button type="button" class="rapid-btn rapid-btn-secondary" id="rapid-next">Next question</button>
+        </div>
+        <div class="rapid-answer-block" id="rapid-answer-block" hidden>
+          <div class="rapid-ans-label">Answer</div>
+          <div class="rapid-answer" id="rapid-answer"></div>
+          <div class="rapid-explanation" id="rapid-explanation"></div>
+        </div>
       </div>
     </div>
 
@@ -1229,6 +2004,8 @@
 </main>
 </div>
 
+<script src="rapid-fire-data.js"></script>
 <script src="main.js"></script>
+<script src="rapid-fire.js"></script>
 </body>
 </html>
